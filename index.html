@@ -12,8 +12,7 @@ radial-gradient(circle at 20% 10%,rgba(113,59,255,.35),transparent 35%),
 radial-gradient(circle at 85% 80%,rgba(0,126,255,.25),transparent 35%),
 linear-gradient(135deg,#09051b,#171052 45%,#071c3d)}
 #particles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.p{position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(180,170,255,.65);box-shadow:0 0 12px rgba(130,100,255,.8);animation:float linear infinite}
-@keyframes float{0%{transform:translate3d(0,110vh,0);opacity:0}15%{opacity:.8}85%{opacity:.8}100%{transform:translate3d(50px,-10vh,0);opacity:0}}
+.p{position:absolute;border-radius:50%;background:rgba(190,185,255,.72);box-shadow:0 0 12px rgba(130,100,255,.75);animation:twinkle ease-in-out infinite alternate}.p.star{width:0!important;height:0!important;background:transparent!important;box-shadow:none!important}.p.star:before,.p.star:after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(225,220,255,.9);border-radius:2px}.p.star:before{width:2px;height:14px;box-shadow:0 0 10px rgba(170,150,255,.95)}.p.star:after{width:14px;height:2px;box-shadow:0 0 10px rgba(170,150,255,.95)}@keyframes twinkle{0%{opacity:.25;transform:scale(.8)}100%{opacity:1;transform:scale(1.15)}}
 #loading{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#09051b;transition:.5s}
 .loader{width:54px;height:54px;border:5px solid rgba(255,255,255,.15);border-top-color:#8b5cff;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -134,13 +133,15 @@ const music=document.getElementById('relaxMusic');
 let releases=[];
 let category='all';
 
-for(let i=0;i<65;i++){
+for(let i=0;i<85;i++){
   const p=document.createElement('div');
-  p.className='p';
+  const isStar=Math.random()<.18;
+  p.className='p'+(isStar?' star':'');
   p.style.left=Math.random()*100+'%';
-  p.style.animationDuration=(8+Math.random()*15)+'s';
-  p.style.animationDelay=(-Math.random()*20)+'s';
-  p.style.width=p.style.height=(2+Math.random()*5)+'px';
+  p.style.top=Math.random()*100+'%';
+  p.style.animationDuration=(2.5+Math.random()*5)+'s';
+  p.style.animationDelay=(-Math.random()*6)+'s';
+  if(!isStar){const size=2+Math.random()*5;p.style.width=p.style.height=size+'px';}
   document.getElementById('particles').appendChild(p);
 }
 
