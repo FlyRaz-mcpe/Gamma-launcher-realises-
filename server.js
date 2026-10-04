@@ -9,22 +9,34 @@ const Database = require('better-sqlite3');
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 const DATA_DIR = process.env.DATA_DIR || './data';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
+const UPLOAD_DIR =
+  process.env.UPLOAD_DIR || `${DATA_DIR}/uploads`;
+
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+
 const db = new Database(`${DATA_DIR}/gamma.db`);
 
-const PORT = process.env.PORT || 3000;
+/*
+========================================
+  ПОЛЬЗОВАТЕЛИ, КОТОРЫМ РАЗРЕШЕНА ПУБЛИКАЦИЯ
+========================================
+*/
 
 const ALLOWED = new Set([
   'flyraz_mc',
   'yuno8340'
 ]);
 
-const UPLOAD_DIR =
-  process.env.UPLOAD_DIR || `${DATA_DIR}/uploads`;
-
-fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+/*
+========================================
+  DATABASE
+========================================
+*/
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
@@ -47,52 +59,94 @@ db.exec(`
   );
 `);
 
+/*
+========================================
+  MIDDLEWARE
+========================================
+*/
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
+    secret:
+      process.env.SESSION_SECRET ||
+      'change-this-secret',
+
     resave: false,
+
     saveUninitialized: false,
+
     cookie: {
       httpOnly: true,
       sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production'
+      secure:
+        process.env.NODE_ENV === 'production'
     }
   })
 );
 
-app.use(express.static('public'));
+/*
+========================================
+  INDEX.HTML В КОРНЕ ПРОЕКТА
+========================================
+*/
 
-/* APK upload */
+app.use(express.static('.'));
+
+/*
+========================================
+  APK UPLOAD
+========================================
+*/
 
 const upload = multer({
   dest: UPLOAD_DIR + '/',
+
   limits: {
     fileSize: 500 * 1024 * 1024
   },
+
   fileFilter: (req, file, cb) => {
     const isApk = file.originalname
       .toLowerCase()
       .endsWith('.apk');
 
-    cb(null, isApk);
+    if (!isApk) {
+      return cb(null, false);
+    }
+
+    cb(null, true);
   }
 });
 
-/* Check publisher */
+/*
+========================================
+  ПРОВЕРКА ПУБЛИКАТОРА
+========================================
+
+  ВАЖНО:
+  Только Telegram-пользователи
+  @flyraz_mc и @yuno8340
+*/
 
 function publisher(req) {
   return !!(
     req.session.user &&
+    req.session.user.provider === 'telegram' &&
     ALLOWED.has(
-      (req.session.user.username || '').toLowerCase()
+      (req.session.user.username || '')
+        .toLowerCase()
     )
   );
 }
 
-/* Current user */
+/*
+========================================
+  ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ
+========================================
+*/
 
 app.get('/api/me', (req, res) => {
   res.json({
@@ -101,198 +155,154 @@ app.get('/api/me', (req, res) => {
   });
 });
 
-/* Releases */
+/*
+========================================
+  СПИСОК РЕЛИЗОВ
+========================================
+*/
 
 app.get('/api/releases', (req, res) => {
-  const releases = db
-    .prepare(`
-      SELECT
-        id,
-        title,
-        version,
-        category,
-        description,
-        filename,
-        author,
-        created_at
-      FROM releases
-      ORDER BY id DESC
-    `)
-    .all();
+  try {
+    const releases = db
+      .prepare(`
+        SELECT
+          id,
+          title,
+          version,
+          category,
+          description,
+          filename,
+          author,
+          created_at
+        FROM releases
+        ORDER BY id DESC
+      `)
+      .all();
 
-  res.json(releases);
+    res.json(releases);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Failed to load releases'
+    });
+  }
 });
 
-/* Download APK */
+/*
+========================================
+  СКАЧИВАНИЕ APK
+========================================
+*/
 
 app.get('/download/:id', (req, res) => {
-  const release = db
-    .prepare('SELECT * FROM releases WHERE id = ?')
-    .get(req.params.id);
-
-  if (!release || !fs.existsSync(release.filename)) {
-    return res.sendStatus(404);
-  }
-
-  res.download(
-    release.filename,
-    release.title + '.apk'
-  );
-});
-
-/* Telegram Login */
-
-app.post('/auth/telegram', (req, res) => {
-  const data = { ...req.body };
-
-  const hash = data.hash;
-
-  delete data.hash;
-
-  if (!hash) {
-    return res.status(400).json({
-      error: 'missing hash'
-    });
-  }
-
-  const check = Object.keys(data)
-    .sort()
-    .map(key => `${key}=${data[key]}`)
-    .join('\n');
-
-  const secret = crypto
-    .createHash('sha256')
-    .update(process.env.TELEGRAM_BOT_TOKEN || '')
-    .digest();
-
-  const expected = crypto
-    .createHmac('sha256', secret)
-    .update(check)
-    .digest('hex');
-
-  if (
-    !crypto.timingSafeEqual(
-      Buffer.from(expected),
-      Buffer.from(hash)
-    )
-  ) {
-    return res.status(401).json({
-      error: 'invalid telegram auth'
-    });
-  }
-
-  if (
-    data.auth_date &&
-    Date.now() / 1000 - Number(data.auth_date) > 86400
-  ) {
-    return res.status(401).json({
-      error: 'expired login'
-    });
-  }
-
-  const username = (data.username || '').toLowerCase();
-
-  db.prepare(`
-    INSERT INTO users (
-      provider,
-      provider_id,
-      username,
-      created_at
-    )
-    VALUES (?, ?, ?, ?)
-
-    ON CONFLICT(provider_id)
-    DO UPDATE SET username = excluded.username
-  `).run(
-    'telegram',
-    String(data.id),
-    username,
-    new Date().toISOString()
-  );
-
-  req.session.user = {
-    provider: 'telegram',
-    id: String(data.id),
-    username
-  };
-
-  res.json({
-    ok: true,
-    user: req.session.user,
-    publisher: ALLOWED.has(username)
-  });
-});
-
-/* Discord Login */
-
-app.get('/auth/discord', (req, res) => {
-  const redirectUri =
-    process.env.DISCORD_REDIRECT_URI ||
-    `${process.env.SITE_URL}/auth/discord/callback`;
-
-  const params = new URLSearchParams({
-    client_id: process.env.DISCORD_CLIENT_ID || '',
-    response_type: 'code',
-    redirect_uri: redirectUri,
-    scope: 'identify'
-  });
-
-  res.redirect(
-    'https://discord.com/oauth2/authorize?' +
-    params.toString()
-  );
-});
-
-/* Discord Callback */
-
-app.get('/auth/discord/callback', async (req, res) => {
   try {
-    const redirectUri =
-      process.env.DISCORD_REDIRECT_URI;
+    const release = db
+      .prepare(
+        'SELECT * FROM releases WHERE id = ?'
+      )
+      .get(req.params.id);
 
-    const body = new URLSearchParams({
-      client_id: process.env.DISCORD_CLIENT_ID || '',
-      client_secret:
-        process.env.DISCORD_CLIENT_SECRET || '',
-      grant_type: 'authorization_code',
-      code: req.query.code,
-      redirect_uri: redirectUri || ''
-    });
-
-    const tokenResponse = await fetch(
-      'https://discord.com/api/oauth2/token',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type':
-            'application/x-www-form-urlencoded'
-        },
-        body
-      }
-    );
-
-    const token = await tokenResponse.json();
-
-    if (!token.access_token) {
-      return res
-        .status(500)
-        .send('Discord token error');
+    if (!release) {
+      return res.sendStatus(404);
     }
 
-    const userResponse = await fetch(
-      'https://discord.com/api/users/@me',
-      {
-        headers: {
-          Authorization:
-            `Bearer ${token.access_token}`
-        }
-      }
+    if (!fs.existsSync(release.filename)) {
+      return res.sendStatus(404);
+    }
+
+    const safeTitle =
+      (release.title || 'release')
+        .replace(/[^a-zA-Z0-9а-яА-Я _.-]/g, '_');
+
+    res.download(
+      release.filename,
+      safeTitle + '.apk'
     );
 
-    const user = await userResponse.json();
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).send(
+      'Download error'
+    );
+  }
+});
+
+/*
+========================================
+  TELEGRAM LOGIN
+========================================
+*/
+
+app.post('/auth/telegram', (req, res) => {
+  try {
+    const data = { ...req.body };
+
+    const hash = data.hash;
+
+    delete data.hash;
+
+    if (!hash) {
+      return res.status(400).json({
+        error: 'missing hash'
+      });
+    }
+
+    const check = Object.keys(data)
+      .sort()
+      .map(
+        key =>
+          `${key}=${data[key]}`
+      )
+      .join('\n');
+
+    const secret = crypto
+      .createHash('sha256')
+      .update(
+        process.env.TELEGRAM_BOT_TOKEN || ''
+      )
+      .digest();
+
+    const expected = crypto
+      .createHmac('sha256', secret)
+      .update(check)
+      .digest('hex');
+
+    if (
+      expected.length !== hash.length ||
+      !crypto.timingSafeEqual(
+        Buffer.from(expected),
+        Buffer.from(hash)
+      )
+    ) {
+      return res.status(401).json({
+        error: 'invalid telegram auth'
+      });
+    }
+
+    /*
+      Telegram login должен быть свежим
+    */
+
+    if (
+      data.auth_date &&
+      Date.now() / 1000 -
+        Number(data.auth_date) >
+        86400
+    ) {
+      return res.status(401).json({
+        error: 'expired login'
+      });
+    }
 
     const username =
-      (user.username || '').toLowerCase();
+      (data.username || '')
+        .toLowerCase();
+
+    /*
+      Сохраняем пользователя
+    */
 
     db.prepare(`
       INSERT INTO users (
@@ -304,103 +314,403 @@ app.get('/auth/discord/callback', async (req, res) => {
       VALUES (?, ?, ?, ?)
 
       ON CONFLICT(provider_id)
-      DO UPDATE SET username = excluded.username
+      DO UPDATE SET
+        username = excluded.username
     `).run(
-      'discord',
-      user.id,
+      'telegram',
+      String(data.id),
       username,
       new Date().toISOString()
     );
 
+    /*
+      Создаем сессию
+    */
+
     req.session.user = {
-      provider: 'discord',
-      id: user.id,
+      provider: 'telegram',
+      id: String(data.id),
       username
     };
 
-    res.redirect('/');
+    res.json({
+      ok: true,
+
+      user: req.session.user,
+
+      publisher:
+        ALLOWED.has(username)
+    });
+
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .send('Discord login failed');
+
+    res.status(500).json({
+      error: 'Telegram login failed'
+    });
   }
 });
 
-/* Logout */
+/*
+========================================
+  DISCORD LOGIN
+========================================
+*/
+
+app.get('/auth/discord', (req, res) => {
+  const redirectUri =
+    process.env.DISCORD_REDIRECT_URI ||
+    `${process.env.SITE_URL}/auth/discord/callback`;
+
+  const params = new URLSearchParams({
+    client_id:
+      process.env.DISCORD_CLIENT_ID || '',
+
+    response_type: 'code',
+
+    redirect_uri:
+      redirectUri,
+
+    scope: 'identify'
+  });
+
+  res.redirect(
+    'https://discord.com/oauth2/authorize?' +
+    params.toString()
+  );
+});
+
+/*
+========================================
+  DISCORD CALLBACK
+========================================
+*/
+
+app.get(
+  '/auth/discord/callback',
+  async (req, res) => {
+
+    try {
+
+      if (!req.query.code) {
+        return res
+          .status(400)
+          .send('Missing Discord code');
+      }
+
+      const redirectUri =
+        process.env.DISCORD_REDIRECT_URI;
+
+      const body =
+        new URLSearchParams({
+          client_id:
+            process.env.DISCORD_CLIENT_ID || '',
+
+          client_secret:
+            process.env.DISCORD_CLIENT_SECRET || '',
+
+          grant_type:
+            'authorization_code',
+
+          code:
+            req.query.code,
+
+          redirect_uri:
+            redirectUri || ''
+        });
+
+      const tokenResponse =
+        await fetch(
+          'https://discord.com/api/oauth2/token',
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/x-www-form-urlencoded'
+            },
+
+            body
+          }
+        );
+
+      const token =
+        await tokenResponse.json();
+
+      if (!token.access_token) {
+        console.error(token);
+
+        return res
+          .status(500)
+          .send(
+            'Discord token error'
+          );
+      }
+
+      /*
+        Получаем Discord пользователя
+      */
+
+      const userResponse =
+        await fetch(
+          'https://discord.com/api/users/@me',
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token.access_token}`
+            }
+          }
+        );
+
+      const user =
+        await userResponse.json();
+
+      const username =
+        (user.username || '')
+          .toLowerCase();
+
+      /*
+        Сохраняем пользователя
+      */
+
+      db.prepare(`
+        INSERT INTO users (
+          provider,
+          provider_id,
+          username,
+          created_at
+        )
+        VALUES (?, ?, ?, ?)
+
+        ON CONFLICT(provider_id)
+        DO UPDATE SET
+          username = excluded.username
+      `).run(
+        'discord',
+        user.id,
+        username,
+        new Date().toISOString()
+      );
+
+      /*
+        Discord может войти,
+        но НЕ получает права публикации.
+      */
+
+      req.session.user = {
+        provider: 'discord',
+        id: user.id,
+        username
+      };
+
+      res.redirect('/');
+
+    } catch (error) {
+
+      console.error(error);
+
+      res
+        .status(500)
+        .send(
+          'Discord login failed'
+        );
+    }
+  }
+);
+
+/*
+========================================
+  ВЫХОД
+========================================
+*/
 
 app.post('/auth/logout', (req, res) => {
+
   req.session.destroy(() => {
+
     res.json({
       ok: true
     });
+
   });
 });
 
-/* Publish release */
+/*
+========================================
+  ПУБЛИКАЦИЯ APK
+========================================
+*/
 
 app.post(
   '/api/releases',
   upload.single('apk'),
+
   (req, res) => {
 
-    if (!publisher(req)) {
-      return res.status(403).json({
+    try {
+
+      /*
+        Проверяем права
+      */
+
+      if (!publisher(req)) {
+        return res.status(403).json({
+          error:
+            'Only @flyraz_mc and @yuno8340 can publish'
+        });
+      }
+
+      /*
+        Проверяем APK
+      */
+
+      if (!req.file) {
+        return res.status(400).json({
+          error:
+            'APK file required'
+        });
+      }
+
+      /*
+        Проверяем название
+      */
+
+      if (!req.body.title) {
+        return res.status(400).json({
+          error:
+            'Title required'
+        });
+      }
+
+      /*
+        Проверяем версию
+      */
+
+      if (!req.body.version) {
+        return res.status(400).json({
+          error:
+            'Version required'
+        });
+      }
+
+      /*
+        Сохраняем релиз
+      */
+
+      const release =
+        db.prepare(`
+          INSERT INTO releases (
+            title,
+            version,
+            category,
+            description,
+            filename,
+            author,
+            created_at
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `).run(
+
+          req.body.title,
+
+          req.body.version,
+
+          req.body.category ||
+            'Other',
+
+          req.body.description ||
+            '',
+
+          req.file.path,
+
+          req.session.user.username,
+
+          new Date().toISOString()
+        );
+
+      res.json({
+        ok: true,
+
+        id:
+          release.lastInsertRowid
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      /*
+        Если база не сохранилась,
+        удаляем загруженный APK
+      */
+
+      if (
+        req.file &&
+        fs.existsSync(req.file.path)
+      ) {
+        fs.unlinkSync(
+          req.file.path
+        );
+      }
+
+      res.status(500).json({
         error:
-          'Only @flyraz_mc and @yuno8340 can publish'
+          'Failed to publish release'
       });
     }
-
-    if (!req.file) {
-      return res.status(400).json({
-        error: 'APK required'
-      });
-    }
-
-    const release = db.prepare(`
-      INSERT INTO releases (
-        title,
-        version,
-        category,
-        description,
-        filename,
-        author,
-        created_at
-      )
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      req.body.title,
-      req.body.version,
-      req.body.category,
-      req.body.description,
-      req.file.path,
-      req.session.user.username,
-      new Date().toISOString()
-    );
-
-    res.json({
-      ok: true,
-      id: release.lastInsertRowid
-    });
   }
 );
 
-/* Health check */
+/*
+========================================
+  HEALTH CHECK
+========================================
+*/
 
 app.get('/healthz', (req, res) => {
+
   res.json({
     ok: true
   });
+
 });
 
-/* Start server */
+/*
+========================================
+  404
+========================================
+*/
+
+app.use((req, res) => {
+
+  if (
+    req.path.startsWith('/api/')
+  ) {
+    return res.status(404).json({
+      error: 'Not found'
+    });
+  }
+
+  res.status(404).send(
+    'Page not found'
+  );
+
+});
+
+/*
+========================================
+  START SERVER
+========================================
+*/
 
 app.listen(
   PORT,
   '0.0.0.0',
   () => {
+
     console.log(
-      `Gamma Releases running on ${PORT}`
+      `Gamma Releases running on port ${PORT}`
     );
+
   }
 );
