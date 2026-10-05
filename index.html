@@ -6,131 +6,154 @@
 <title>Gamma Releases</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 *{box-sizing:border-box}
 
 :root{
-  --bg:#07050c;
-  --panel:rgba(20,14,31,.72);
-  --panel2:rgba(31,20,48,.78);
-  --line:rgba(177,112,255,.22);
-  --purple:#9d4cff;
-  --purple2:#c27aff;
-  --text:#f8f3ff;
-  --muted:#a99bb8;
+  --text:#f7efff;
+  --muted:#c8afd9;
 }
 
+html,body{margin:0;min-height:100%}
+
 body{
-  margin:0;
-  min-height:100vh;
   color:var(--text);
-  font-family:Inter,Arial,sans-serif;
+  font-family:Georgia,"Times New Roman",serif;
   background:
-    radial-gradient(ellipse at 50% -15%,rgba(145,62,255,.30),transparent 46%),
-    radial-gradient(circle at 5% 55%,rgba(107,35,205,.13),transparent 32%),
-    radial-gradient(circle at 95% 85%,rgba(156,67,255,.13),transparent 32%),
-    var(--bg);
+    radial-gradient(circle at 50% 15%,rgba(132,42,219,.34),transparent 35%),
+    radial-gradient(circle at 12% 85%,rgba(107,27,189,.20),transparent 30%),
+    linear-gradient(135deg,#07030c,#19082b 55%,#08030d);
+  background-attachment:fixed;
   overflow-x:hidden;
 }
 
-/* Atmosphere */
-body:before{
-  content:"";
+/* ---------- Ambient layer (GPU-friendly: no blur filters, transform/opacity only) ---------- */
+.ambient{
   position:fixed;
   inset:0;
+  z-index:0;
   pointer-events:none;
-  background:
-    linear-gradient(115deg,transparent 0%,rgba(177,100,255,.035) 45%,transparent 70%);
+  overflow:hidden;
+  contain:strict;
 }
 
-body:after{
-  content:"";
-  position:fixed;
-  width:520px;
-  height:520px;
-  left:50%;
-  top:28%;
-  transform:translate(-50%,-50%);
+.orb{
+  position:absolute;
   border-radius:50%;
-  background:rgba(128,45,255,.08);
-  filter:blur(100px);
-  pointer-events:none;
+  will-change:transform;
+}
+.orb1{width:520px;height:520px;left:-200px;top:14%;
+  background:radial-gradient(circle,rgba(139,37,216,.38),transparent 68%);
+  animation:orbFloat1 18s ease-in-out infinite}
+.orb2{width:480px;height:480px;right:-180px;top:4%;
+  background:radial-gradient(circle,rgba(192,76,255,.30),transparent 68%);
+  animation:orbFloat2 22s ease-in-out infinite}
+.orb3{width:620px;height:620px;left:34%;bottom:-340px;
+  background:radial-gradient(circle,rgba(95,25,170,.42),transparent 68%);
+  animation:orbFloat3 26s ease-in-out infinite}
+
+@keyframes orbFloat1{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(120px,-70px,0)}}
+@keyframes orbFloat2{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-100px,90px,0)}}
+@keyframes orbFloat3{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-80px,-60px,0)}}
+
+/* Particles */
+.particle{
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  width:var(--s);
+  height:var(--s);
+  background:var(--pc);
+  box-shadow:0 0 8px var(--pc);
+  opacity:0;
+  will-change:transform,opacity;
+  animation:particleFloat var(--dur) ease-in-out infinite;
+  animation-delay:var(--delay);
+}
+.particle.circle{border-radius:50%}
+.particle.square{border-radius:2px}
+.particle.star{clip-path:polygon(50% 0%,61% 36%,100% 50%,61% 64%,50% 100%,39% 64%,0% 50%,39% 36%);box-shadow:none}
+
+@keyframes particleFloat{
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg) scale(.72);opacity:0}
+  12%{opacity:var(--o)}
+  32%{transform:translate3d(var(--mx1),var(--my1),0) rotate(75deg) scale(1)}
+  55%{transform:translate3d(var(--mx2),var(--my2),0) rotate(165deg) scale(.86)}
+  78%{transform:translate3d(var(--mx3),var(--my3),0) rotate(260deg) scale(1.08)}
+  90%{opacity:var(--o)}
 }
 
-/* Header */
+/* Pause everything when tab is hidden */
+.ambient.paused .orb,
+.ambient.paused .particle{animation-play-state:paused}
+
+/* ---------- Layout ---------- */
 header{
   position:relative;
+  z-index:2;
   text-align:center;
-  padding:58px 18px 30px;
+  padding:55px 18px 30px;
 }
 
 .logo{
   margin:0;
-  font-size:clamp(42px,11vw,78px);
-  line-height:1;
-  font-weight:800;
-  letter-spacing:-3px;
+  font-size:clamp(42px,11vw,76px);
+  font-weight:700;
+  letter-spacing:1px;
   text-shadow:
-    0 0 12px rgba(178,91,255,.75),
-    0 0 38px rgba(129,46,255,.42);
+    0 0 6px rgba(255,210,255,.55),
+    0 0 20px rgba(180,76,255,.85),
+    0 0 45px rgba(119,31,214,.55);
 }
 
 .subtitle{
-  margin:15px 0 0;
-  color:#aa9bb8;
-  font-size:13px;
-  letter-spacing:2px;
+  margin:9px 0 0;
+  color:#b884df;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:4px;
   text-transform:uppercase;
 }
 
-/* Tabs */
 .tabs{
   position:relative;
+  z-index:3;
   display:flex;
-  justify-content:center;
   flex-wrap:wrap;
-  gap:8px;
-  width:min(1000px,calc(100% - 24px));
-  margin:0 auto 30px;
+  justify-content:center;
+  gap:10px;
+  width:min(1050px,calc(100% - 28px));
+  margin:0 auto 27px;
   padding:7px;
-  border:1px solid rgba(179,105,255,.15);
-  border-radius:18px;
-  background:rgba(12,8,19,.66);
-  backdrop-filter:blur(18px);
-  box-shadow:0 15px 50px rgba(0,0,0,.28);
+  border:1px solid rgba(156,71,235,.55);
+  border-radius:16px;
+  background:rgba(21,8,37,.88);
+  box-shadow:inset 0 0 22px rgba(124,36,205,.13),0 0 25px rgba(114,30,202,.12);
 }
 
 .tab{
   border:1px solid transparent;
-  background:transparent;
-  color:#93859f;
+  border-radius:10px;
   padding:11px 17px;
-  border-radius:12px;
+  background:transparent;
+  color:#bfa7cf;
   cursor:pointer;
-  font:500 13px Inter,Arial,sans-serif;
-  transition:.2s ease;
+  font:700 14px Georgia,"Times New Roman",serif;
+  transition:color .2s,border-color .2s,background .2s,box-shadow .2s;
 }
 
-.tab:hover{
-  color:#e8d9f5;
-  background:rgba(139,69,211,.10);
-}
-
+.tab:hover,
 .tab.active{
   color:#fff;
-  border-color:rgba(183,105,255,.38);
-  background:linear-gradient(135deg,rgba(125,48,205,.34),rgba(79,29,130,.24));
-  box-shadow:
-    inset 0 0 18px rgba(171,83,255,.08),
-    0 0 22px rgba(145,55,255,.12);
+  border-color:rgba(191,105,255,.65);
+  background:linear-gradient(135deg,rgba(121,36,202,.46),rgba(65,17,115,.50));
+  box-shadow:inset 0 0 18px rgba(180,78,255,.18),0 0 18px rgba(155,58,240,.27);
 }
 
-/* Content */
 .container{
   position:relative;
+  z-index:2;
   width:min(1050px,calc(100% - 28px));
-  margin:0 auto 70px;
+  margin:0 auto 65px;
 }
 
 .grid{
@@ -139,256 +162,246 @@ header{
   gap:16px;
 }
 
-/* Cards */
+/* ---------- Cards (glow via gradients instead of blur filters) ---------- */
 .card{
   position:relative;
-  min-height:220px;
-  padding:23px;
+  min-height:215px;
+  padding:22px;
   overflow:hidden;
+  border:1px solid rgba(145,58,220,.80);
   border-radius:20px;
-  border:1px solid var(--line);
   background:
-    linear-gradient(145deg,rgba(34,22,49,.82),rgba(13,9,19,.88));
-  backdrop-filter:blur(18px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.045),
-    0 18px 45px rgba(0,0,0,.28);
-  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
-}
-
-.card:before{
-  content:"";
-  position:absolute;
-  left:-50px;
-  top:-70px;
-  width:190px;
-  height:190px;
-  border-radius:50%;
-  background:rgba(158,70,255,.11);
-  filter:blur(35px);
-}
-
-.card:after{
-  content:"";
-  position:absolute;
-  right:-80px;
-  bottom:-100px;
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  background:rgba(105,39,190,.09);
-  filter:blur(30px);
+    radial-gradient(circle at 0% 0%,rgba(160,62,255,.20),transparent 45%),
+    radial-gradient(circle at 100% 100%,rgba(100,25,185,.24),transparent 45%),
+    linear-gradient(145deg,rgba(48,17,76,.92),rgba(18,7,32,.96));
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 0 20px rgba(117,32,204,.10);
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(190,116,255,.43);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 20px 50px rgba(0,0,0,.38),
-    0 0 35px rgba(142,54,255,.13);
-}
-
-.card > *{
-  position:relative;
-  z-index:2;
+  transform:translateY(-4px);
+  border-color:#b457ff;
+  box-shadow:inset 0 1px rgba(255,255,255,.11),0 0 30px rgba(153,59,242,.28);
 }
 
 .type{
-  display:inline-flex;
-  align-items:center;
-  padding:6px 9px;
+  display:inline-block;
+  padding:6px 10px;
   border-radius:8px;
-  color:#c99cff;
-  background:rgba(145,66,220,.09);
-  border:1px solid rgba(180,100,255,.16);
+  border:1px solid rgba(182,96,255,.38);
+  background:rgba(112,36,177,.24);
+  color:#d5a4f6;
   font-size:10px;
   font-weight:700;
-  letter-spacing:1.2px;
+  letter-spacing:1.5px;
 }
 
 .card h2{
-  margin:18px 0 8px;
-  font-size:21px;
-  line-height:1.25;
-  font-weight:700;
+  margin:17px 0 7px;
+  font-size:22px;
+  line-height:1.2;
 }
 
 .version{
+  margin-bottom:21px;
   color:var(--muted);
-  font-size:13px;
-  margin-bottom:22px;
+  font-size:14px;
 }
 
-/* Download */
 .download{
   display:block;
   width:100%;
-  padding:12px 16px;
+  padding:12px 15px;
   border-radius:11px;
+  border:1px solid rgba(201,122,255,.72);
+  background:linear-gradient(135deg,rgba(132,39,218,.92),rgba(91,25,157,.90));
+  color:#fff;
   text-align:center;
   text-decoration:none;
-  color:#fff;
-  font-size:13px;
+  font-size:14px;
   font-weight:700;
-  border:1px solid rgba(196,126,255,.38);
-  background:
-    linear-gradient(135deg,rgba(142,53,228,.82),rgba(96,38,167,.82));
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.09),
-    0 0 22px rgba(137,50,235,.17);
-  transition:.2s ease;
+  box-shadow:inset 0 1px rgba(255,255,255,.13),0 0 17px rgba(145,47,234,.30);
+  transition:background .2s,box-shadow .2s;
 }
 
 .download:hover{
-  border-color:rgba(213,161,255,.65);
-  background:
-    linear-gradient(135deg,rgba(159,67,247,.95),rgba(108,42,184,.95));
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.12),
-    0 0 28px rgba(155,61,255,.34);
-  transform:translateY(-1px);
+  background:linear-gradient(135deg,rgba(164,61,247,.98),rgba(106,31,181,.98));
+  box-shadow:inset 0 1px rgba(255,255,255,.18),0 0 27px rgba(170,72,255,.48);
 }
 
-/* Empty */
 .empty{
   display:none;
-  padding:60px 15px;
   text-align:center;
-  color:#8f819b;
+  padding:55px 10px;
+  color:#9d88aa;
 }
 
-/* Footer */
 footer{
-  text-align:center;
+  position:relative;
+  z-index:2;
   padding:10px 20px 35px;
-  color:#5f5369;
+  text-align:center;
+  color:#6f587c;
   font-size:11px;
-  letter-spacing:1px;
+  letter-spacing:2px;
 }
 
 @media(max-width:600px){
-  header{padding:45px 16px 26px}
-  .logo{letter-spacing:-2px}
-  .tabs{
-    justify-content:flex-start;
-    overflow-x:auto;
-    flex-wrap:nowrap;
-    scrollbar-width:none;
-  }
+  header{padding-top:42px}
+  .logo{font-size:43px}
+  .subtitle{font-size:11px;letter-spacing:2.5px}
+  .tabs{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tab{white-space:nowrap}
   .grid{grid-template-columns:1fr}
-  .card{min-height:205px}
+  .orb{opacity:.7}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .orb,.particle{animation:none}
+  .particle{opacity:.6}
+  .card,.tab,.download{transition:none}
 }
 </style>
 </head>
 
 <body>
+<div class="ambient" id="ambient" aria-hidden="true">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div id="particles"></div>
+</div>
 
 <header>
   <h1 class="logo">Gamma Releases</h1>
-  <p class="subtitle">Launcher & Minecraft Releases</p>
+  <p class="subtitle">Launcher &amp; Minecraft Releases</p>
 </header>
 
-<nav class="tabs">
-  <button class="tab active" onclick="filterCards('All',this)">Все</button>
-  <button class="tab" onclick="filterCards('Android',this)">Android</button>
-  <button class="tab" onclick="filterCards('Windows',this)">Windows</button>
-  <button class="tab" onclick="filterCards('Minecraft',this)">Майнкрафт на Android</button>
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-filter="All">Все</button>
+  <button class="tab" data-filter="Android">Android</button>
+  <button class="tab" data-filter="Windows">Windows</button>
+  <button class="tab" data-filter="Minecraft">Майнкрафт на Android</button>
 </nav>
 
 <main class="container">
-  <section class="grid">
+  <section class="grid" id="grid">
 
     <article class="card" data-category="Windows">
       <span class="type">GAMMA LAUNCHER</span>
       <h2>Gamma Launcher for Windows</h2>
       <div class="version">Windows • Release</div>
-      <a class="download"
-         href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe">
-        Скачать
-      </a>
+      <a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe">Скачать</a>
     </article>
 
     <article class="card" data-category="Android">
       <span class="type">GAMMA LAUNCHER</span>
       <h2>Gamma Launcher for Android</h2>
       <div class="version">Android • APK</div>
-      <a class="download"
-         href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk">
-        Скачать
-      </a>
+      <a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk">Скачать</a>
     </article>
 
     <article class="card" data-category="Minecraft">
       <span class="type">MINECRAFT PE</span>
       <h2>Minecraft PE 1.26.51</h2>
       <div class="version">Android • APK</div>
-      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=55998">
-        Скачать APK
-      </a>
+      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=55998">Скачать APK</a>
     </article>
 
     <article class="card" data-category="Minecraft">
       <span class="type">MINECRAFT PE</span>
       <h2>Minecraft PE 1.26.50</h2>
       <div class="version">Android • APK</div>
-      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=55989">
-        Скачать APK
-      </a>
+      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=55989">Скачать APK</a>
     </article>
 
     <article class="card" data-category="Minecraft">
       <span class="type">MINECRAFT PE</span>
       <h2>Minecraft PE 1.26.45</h2>
       <div class="version">Android • APK</div>
-      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=55381">
-        Скачать APK
-      </a>
+      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=55381">Скачать APK</a>
     </article>
 
     <article class="card" data-category="Minecraft">
       <span class="type">MINECRAFT PE</span>
       <h2>Minecraft PE 1.26.44</h2>
       <div class="version">Android • APK</div>
-      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=54994">
-        Скачать APK
-      </a>
+      <a class="download" href="https://mcpehub.org/engine/getfile.php?id=54994">Скачать APK</a>
     </article>
 
   </section>
 
-  <div class="empty" id="empty">
-    В этой категории пока нет релизов.
-  </div>
+  <div class="empty" id="empty">В этой категории пока нет релизов.</div>
 </main>
 
 <footer>GAMMA RELEASES</footer>
 
 <script>
-function filterCards(category, button) {
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.classList.remove("active");
+(function(){
+  "use strict";
+
+  /* ---------- Particles ---------- */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var small  = window.matchMedia("(max-width: 600px)").matches;
+  var count  = reduce ? 0 : (small ? 14 : 30);
+
+  var layer  = document.getElementById("particles");
+  var shapes = ["circle","square","star"];
+  var colors = ["#dca9ff","#b85cff","#ffffff","#c76aff","#9d43ef"];
+  var rnd = Math.random;
+  var frag = document.createDocumentFragment();
+
+  for (var i = 0; i < count; i++) {
+    var el = document.createElement("i");
+    var st = el.style;
+    el.className = "particle " + shapes[(rnd() * 3) | 0];
+    st.setProperty("--x",  (rnd() * 100).toFixed(1) + "%");
+    st.setProperty("--y",  (rnd() * 100).toFixed(1) + "%");
+    st.setProperty("--s",  (rnd() * 4 + 2).toFixed(1) + "px");
+    st.setProperty("--o",  (rnd() * .5 + .35).toFixed(2));
+    st.setProperty("--pc", colors[(rnd() * colors.length) | 0]);
+    st.setProperty("--mx1",(rnd() * 100 - 50).toFixed(0) + "px");
+    st.setProperty("--my1",(rnd() * 120 - 60).toFixed(0) + "px");
+    st.setProperty("--mx2",(rnd() * 160 - 80).toFixed(0) + "px");
+    st.setProperty("--my2",(rnd() * 160 - 80).toFixed(0) + "px");
+    st.setProperty("--mx3",(rnd() * 220 - 110).toFixed(0) + "px");
+    st.setProperty("--my3",(rnd() * 220 - 110).toFixed(0) + "px");
+    st.setProperty("--dur",(rnd() * 9 + 10).toFixed(1) + "s");
+    st.setProperty("--delay",(-rnd() * 15).toFixed(1) + "s");
+    frag.appendChild(el);
+  }
+  layer.appendChild(frag);
+
+  /* Pause animations when the tab is hidden */
+  var ambient = document.getElementById("ambient");
+  document.addEventListener("visibilitychange", function(){
+    ambient.classList.toggle("paused", document.hidden);
   });
 
-  button.classList.add("active");
+  /* ---------- Tabs / filter ---------- */
+  var tabs  = document.getElementById("tabs");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+  var empty = document.getElementById("empty");
 
-  let visible = 0;
+  tabs.addEventListener("click", function(e){
+    var btn = e.target.closest(".tab");
+    if (!btn) return;
 
-  document.querySelectorAll(".card").forEach(card => {
-    const show =
-      category === "All" ||
-      card.dataset.category === category;
+    var active = tabs.querySelector(".active");
+    if (active) active.classList.remove("active");
+    btn.classList.add("active");
 
-    card.style.display = show ? "" : "none";
-
-    if (show) visible++;
+    var category = btn.dataset.filter;
+    var visible = 0;
+    cards.forEach(function(card){
+      var show = category === "All" || card.dataset.category === category;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    empty.style.display = visible ? "none" : "block";
   });
-
-  document.getElementById("empty").style.display =
-    visible ? "none" : "block";
-}
+})();
 </script>
 
 </body>
