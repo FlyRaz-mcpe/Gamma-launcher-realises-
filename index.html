@@ -1,52 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Gamma Releases</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Gamma Releases</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;color:#f7efff}
-body{min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 50% 15%,rgba(105,25,190,.22),transparent 30%),radial-gradient(circle at 80% 80%,rgba(126,40,220,.18),transparent 32%),linear-gradient(145deg,#08030f,#140622 48%,#08020e)}
-#particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(213,177,255,.7);box-shadow:0 0 9px rgba(157,66,255,.8);animation:float linear infinite}
-@keyframes float{0%{transform:translateY(110vh) translateX(0);opacity:0}15%{opacity:.75}80%{opacity:.5}100%{transform:translateY(-15vh) translateX(55px);opacity:0}}
-.container{position:relative;z-index:1;width:min(1050px,92%);margin:auto}header{display:flex;align-items:center;justify-content:space-between;padding:24px 0}
-.logo{font-size:28px;font-weight:800;letter-spacing:.5px;text-shadow:0 0 18px rgba(159,67,255,.45)}.logo .g{background:linear-gradient(90deg,#c778ff,#8c45ff,#6d8cff);-webkit-background-clip:text;background-clip:text;color:transparent}.logo span:last-child{color:#eee3f8}
-.hero{text-align:center;padding:65px 0 35px}.hero h1{font-size:clamp(40px,8vw,76px);margin:0 0 14px;text-shadow:0 0 30px rgba(139,52,255,.35)}.hero h1 span{background:linear-gradient(90deg,#d18aff,#8c50ff,#a96cff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:#c9b9d7;font-size:17px;margin:0 auto;max-width:600px}
-.platforms{display:flex;justify-content:center;gap:10px;margin:30px 0;flex-wrap:wrap}.platform{border:1px solid rgba(165,74,255,.5);background:linear-gradient(145deg,rgba(54,19,82,.8),rgba(23,8,42,.8));padding:10px 18px;border-radius:12px;cursor:pointer;color:#d8c8e5;box-shadow:inset 0 0 14px rgba(147,55,255,.08);font-family:inherit}.platform.active{background:linear-gradient(90deg,rgba(108,39,177,.8),rgba(70,32,132,.8));border-color:#b05cff;color:#fff;box-shadow:0 0 20px rgba(151,61,255,.28)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:70px}.card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(34,12,58,.88),rgba(15,5,28,.9));border:1px solid rgba(157,67,255,.6);border-radius:22px;padding:25px;box-shadow:0 0 22px rgba(104,34,184,.16),inset 0 0 25px rgba(132,46,216,.06)}.card h2{margin:0 0 10px;font-size:25px}.windows{background:linear-gradient(90deg,#9b72ff,#6fa7ff,#c28cff);-webkit-background-clip:text;background-clip:text;color:transparent}.android{background:linear-gradient(90deg,#d27aff,#9a67ff,#72b9ff);-webkit-background-clip:text;background-clip:text;color:transparent}.minecraft{background:linear-gradient(90deg,#7cff9b,#54d979,#a2ffbe);-webkit-background-clip:text;background-clip:text;color:transparent}.version{color:#bda9cb;font-size:14px;margin-bottom:17px}.desc{color:#d7cde0;line-height:1.55;min-height:48px}.download{display:block;text-align:center;text-decoration:none;margin-top:20px;padding:13px;border-radius:13px;color:#fff;font-weight:800;background:linear-gradient(90deg,#7626b9,#713de0,#5745c9);border:1px solid rgba(204,129,255,.5);box-shadow:0 0 18px rgba(126,40,221,.25),inset 0 0 14px rgba(255,255,255,.05);transition:.2s}.download:hover{transform:translateY(-2px);filter:brightness(1.16)}
-footer{text-align:center;color:#806e8f;padding:15px 0 35px;font-size:13px}@media(max-width:700px){.grid{grid-template-columns:1fr}.logo{font-size:23px}}
-</style>
-</head>
-<body>
-<div id="particles"></div>
-<div class="container">
-<header><div class="logo"><span class="g">Gamma</span> <span>Releases</span></div></header>
-<section class="hero"><h1>Gamma <span>Releases</span></h1><p>Официальная страница релизов Gamma Launcher.</p></section>
-
-<div class="platforms">
-<button class="platform active" onclick="filterCards('All',this)">Все</button>
-<button class="platform" onclick="filterCards('Android',this)">Android</button>
-<button class="platform" onclick="filterCards('Windows',this)">Windows</button>
-<button class="platform" onclick="filterCards('Minecraft',this)">Майнкрафт на Android</button>
-</div>
-
-<section class="grid">
-<article class="card" data-platform="Windows"><h2 class="windows">Gamma launcher for Windows</h2><div class="version">Последняя версия</div><div class="desc">Версия Gamma Launcher для Windows.</div><a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe" download>Скачать для Windows</a></article>
-
-<article class="card" data-platform="Android"><h2 class="android">Gamma launcher for Android</h2><div class="version">Последняя версия</div><div class="desc">Версия Gamma Launcher для Android.</div><a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk" download>Скачать для Android</a></article>
-
-<article class="card" data-platform="Minecraft"><h2 class="minecraft">Minecraft PE 1.26.52</h2><div class="version">Android</div><div class="desc">Minecraft PE 1.26.52 для телефона на Android.</div><a class="download" href="https://mcpehub.org/engine/getfile.php?id=56257" download>Скачать Minecraft PE</a></article>
-</section>
-
-<footer>Gamma Releases © 2026</footer>
-</div>
-<script>
-const particles=document.getElementById("particles");
-for(let i=0;i<34;i++){const p=document.createElement("div");p.className="particle";p.style.left=Math.random()*100+"%";p.style.animationDuration=(10+Math.random()*16)+"s";p.style.animationDelay=(-Math.random()*20)+"s";particles.appendChild(p)}
-function filterCards(platform,button){
- document.querySelectorAll(".card").forEach(c=>c.style.display=platform==="All"||c.dataset.platform===platform?"block":"none");
- document.querySelectorAll(".platform").forEach(b=>b.classList.remove("active"));button.classList.add("active");
-}
-</script>
-</body>
-</html>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#fff;font-family:Georgia,"Times New Roman",serif;background:radial-gradient(circle at 15% 10%,rgba(145,55,255,.22),transparent 28%),radial-gradient(circle at 85% 85%,rgba(104,35,210,.18),transparent 30%),linear-gradient(135deg,#08050f,#12071e 48%,#07050c);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(194,126,255,.7) 1px,transparent 1.5px),radial-gradient(circle,rgba(255,255,255,.35) 1px,transparent 1.5px);background-size:90px 90px,140px 140px;background-position:0 0,35px 60px;opacity:.18}header{text-align:center;padding:48px 20px 28px}.logo{margin:0;font-size:clamp(38px,10vw,68px);font-weight:900;letter-spacing:3px;text-shadow:0 0 8px #9d4dff,0 0 25px rgba(157,77,255,.9),0 0 55px rgba(121,42,255,.55)}.subtitle{margin:10px 0 0;color:#cdb9df;font-size:15px;letter-spacing:1px}.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:10px 16px 30px}.tab{border:1px solid rgba(185,104,255,.5);background:rgba(35,14,55,.68);color:#e9dcf7;padding:11px 17px;border-radius:13px;cursor:pointer;font:inherit;font-size:14px;transition:.2s ease}.tab:hover,.tab.active{color:#fff;border-color:#b96cff;background:rgba(103,38,164,.45);box-shadow:0 0 20px rgba(166,76,255,.35);transform:translateY(-1px)}.container{width:min(1050px,calc(100% - 28px));margin:0 auto 60px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.card{position:relative;padding:24px;min-height:205px;border-radius:22px;border:1px solid rgba(177,91,255,.38);background:linear-gradient(145deg,rgba(40,17,61,.9),rgba(15,8,24,.94));box-shadow:inset 0 1px rgba(255,255,255,.05),0 10px 35px rgba(0,0,0,.32),0 0 24px rgba(135,45,230,.12);overflow:hidden;transition:.2s ease}.card:hover{transform:translateY(-4px);border-color:rgba(196,113,255,.75);box-shadow:0 14px 40px rgba(0,0,0,.4),0 0 32px rgba(153,58,255,.24)}.type{display:inline-block;padding:5px 9px;border-radius:8px;font-size:11px;color:#dcbcff;background:rgba(146,63,220,.16);border:1px solid rgba(184,105,255,.28);margin-bottom:15px}.card h2{margin:0 0 8px;font-size:23px}.version{color:#bda7cb;font-size:14px;margin-bottom:22px}.download{display:inline-block;width:100%;text-align:center;text-decoration:none;color:#fff;font-weight:bold;padding:12px 16px;border-radius:12px;border:1px solid rgba(212,153,255,.7);background:linear-gradient(135deg,#7d2bc7,#a14cff);box-shadow:0 0 18px rgba(157,67,255,.3);transition:.2s ease}.download:hover{filter:brightness(1.12);box-shadow:0 0 28px rgba(174,78,255,.52)}.empty{text-align:center;color:#a99bb5;padding:50px 10px;display:none}footer{text-align:center;color:#776b83;font-size:12px;padding:10px 20px 35px}@media(max-width:600px){header{padding-top:34px}.tabs{gap:7px}.tab{padding:10px 12px;font-size:13px}.grid{grid-template-columns:1fr}.card{min-height:190px}}
+</style></head>
+<body><header><h1 class="logo">Gamma Releases</h1><p class="subtitle">Launcher &amp; Minecraft releases</p></header>
+<nav class="tabs"><button class="tab active" onclick="filterCards('All',this)">Все</button><button class="tab" onclick="filterCards('Android',this)">Android</button><button class="tab" onclick="filterCards('Windows',this)">Windows</button><button class="tab" onclick="filterCards('Minecraft',this)">Майнкрафт на Android</button></nav>
+<main class="container"><section class="grid" id="releases">
+<article class="card" data-category="Windows"><span class="type">GAMMA LAUNCHER</span><h2>Gamma Launcher for Windows</h2><div class="version">Windows • Release</div><a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe">Скачать</a></article>
+<article class="card" data-category="Android"><span class="type">GAMMA LAUNCHER</span><h2>Gamma Launcher for Android</h2><div class="version">Android • APK</div><a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk">Скачать</a></article>
+<article class="card" data-category="Minecraft"><span class="type">MINECRAFT PE</span><h2>Minecraft PE 1.26.51</h2><div class="version">Android • APK</div><a class="download" href="https://mcpehub.org/engine/getfile.php?id=55998">Скачать APK</a></article>
+<article class="card" data-category="Minecraft"><span class="type">MINECRAFT PE</span><h2>Minecraft PE 1.26.50</h2><div class="version">Android • APK</div><a class="download" href="https://mcpehub.org/engine/getfile.php?id=55989">Скачать APK</a></article>
+<article class="card" data-category="Minecraft"><span class="type">MINECRAFT PE</span><h2>Minecraft PE 1.26.45</h2><div class="version">Android • APK</div><a class="download" href="https://mcpehub.org/engine/getfile.php?id=55381">Скачать APK</a></article>
+<article class="card" data-category="Minecraft"><span class="type">MINECRAFT PE</span><h2>Minecraft PE 1.26.44</h2><div class="version">Android • APK</div><a class="download" href="https://mcpehub.org/engine/getfile.php?id=54994">Скачать APK</a></article>
+</section><div class="empty" id="empty">В этой категории пока нет релизов.</div></main><footer>Gamma Releases</footer>
+<script>function filterCards(category,button){document.querySelectorAll('.tab').forEach(tab=>tab.classList.remove('active'));button.classList.add('active');let visible=0;document.querySelectorAll('.card').forEach(card=>{const show=category==='All'||card.dataset.category===category;card.style.display=show?'':'none';if(show)visible++});document.getElementById('empty').style.display=visible?'none':'block'}</script></body></html>
