@@ -1,20 +1,164 @@
-<!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08081d"><title>Gamma Releases</title>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamma Releases</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,sans-serif;background:#08081d;color:#fff}body{overflow-x:hidden}.app{min-height:100vh;position:relative;overflow:hidden;background:radial-gradient(circle at 15% 5%,#37207055,transparent 30%),radial-gradient(circle at 90% 90%,#1d58b844,transparent 30%),linear-gradient(135deg,#070719,#11103a 55%,#130b31)}.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}.p{position:absolute;border-radius:50%;background:#cfc5ff;box-shadow:0 0 9px #8b72ff;animation:fly linear infinite}@keyframes fly{0%{transform:translate(0,40px);opacity:.05}30%{opacity:.55}100%{transform:translate(65px,-140px);opacity:.02}}.wrap{position:relative;z-index:1;width:min(1100px,calc(100% - 24px));margin:auto;padding:18px 0 28px}.top{display:flex;justify-content:space-between;align-items:center;padding:8px 2px 25px}.brand{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:800}.logo{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#a34fff,#4c83ff);box-shadow:0 0 28px #754cff55;font-weight:900;font-size:24px}.brand b{color:#a767ff}.menu{width:46px;height:46px;border-radius:15px;border:1px solid #9871ff55;background:#ffffff0b;color:white;font-size:22px}.hero{padding:30px 10px 18px}.eyebrow{font-size:12px;font-weight:800;color:#a98aff;margin-bottom:9px}.hero h1{font-size:clamp(39px,8vw,72px);line-height:.98;letter-spacing:-3px;max-width:700px;margin:0}.grad{background:linear-gradient(135deg,#b34dff,#6d7cff,#4b9cff);background-clip:text;color:transparent}.hero p{color:#aaa7ca;max-width:650px;font-size:17px;line-height:1.55}.search{position:relative;max-width:620px}.search input{width:100%;height:56px;border-radius:18px;border:1px solid #9a70ff66;background:#090a25aa;color:white;padding:0 18px 0 49px;outline:0;font-size:15px}.si{position:absolute;left:18px;top:16px;color:#aaa7ca;font-size:20px}.tabs{display:flex;gap:6px;padding:6px;border:1px solid #9871ff33;border-radius:18px;background:#09092399;overflow:auto;margin:14px 0 22px}.tab{border:0;background:transparent;color:#aaa7ca;padding:11px 16px;border-radius:13px;white-space:nowrap}.tab.active{background:linear-gradient(135deg,#9147ffcc,#477cffbb);color:#fff}.releases{display:grid;gap:14px}.release{display:grid;grid-template-columns:72px 1fr auto auto;gap:17px;align-items:center;padding:17px;border:1px solid #9270ff55;border-radius:21px;background:#10103799;backdrop-filter:blur(14px)}.icon{width:72px;height:72px;border-radius:19px;display:grid;place-items:center;font-size:27px;font-weight:900;background:linear-gradient(145deg,#a14fff35,#508aff22);border:1px solid #9a6cff66}.release h3{margin:0 0 5px;font-size:20px}.desc{color:#aaa7ca;font-size:14px;line-height:1.45}.tags{display:flex;gap:6px;margin-top:8px}.tag{font-size:11px;color:#d0c7ff;padding:5px 8px;border-radius:8px;background:#7451ff20}.meta{min-width:110px}.ver{color:#ad78ff;font-weight:800;font-size:18px}.meta small{display:block;color:#aaa7ca;margin-top:5px}.dl,.primary{border:0;background:linear-gradient(135deg,#9a4dff,#4b83ff);color:#fff;font-weight:800}.dl{width:52px;height:52px;border-radius:16px;font-size:22px}.empty{padding:35px;text-align:center;color:#aaa7ca;border:1px dashed #9871ff44;border-radius:18px}footer{margin-top:25px;padding:17px;border:1px solid #9871ff22;border-radius:18px;color:#aaa7ca;font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}footer a{color:#c9c1ff;text-decoration:none}.admin{display:none;margin:0 10px 20px;padding:15px;border:1px solid #9871ff44;border-radius:17px;background:#17133d99;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.admin.show{display:flex}.primary{padding:12px 16px;border-radius:12px}.loading{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#08081d;transition:.45s}.loading.hide{opacity:0;visibility:hidden}.loader{width:68px;height:68px;border-radius:21px;display:grid;place-items:center;background:linear-gradient(135deg,#a34fff,#4c83ff);font-size:32px;font-weight:900;box-shadow:0 0 55px #754cff66;animation:pulse 1.4s infinite}@keyframes pulse{50%{transform:scale(1.06)}}.loading div+div{text-align:center;color:#aaa7ca;font-size:13px;margin-top:13px}.modal{position:fixed;inset:0;z-index:15;display:none;place-items:center;padding:18px;background:#03030dbb;backdrop-filter:blur(8px)}.modal.show{display:grid}.box{width:min(550px,100%);max-height:90vh;overflow:auto;padding:22px;border-radius:23px;border:1px solid #9871ff55;background:#17143ef7}.head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:none;color:#aaa7ca;font-size:25px}.form{display:grid;gap:11px;margin-top:17px}.form label{font-size:13px;color:#c7c2df}.form input,.form textarea,.form select{width:100%;margin-top:6px;padding:12px;border-radius:12px;border:1px solid #9871ff33;background:#ffffff09;color:#fff;outline:0}.form textarea{min-height:105px}.form option{background:#17143e}.login{display:grid;gap:10px;margin-top:18px}.secondary{border:1px solid #9871ff44;border-radius:12px;padding:12px;background:#ffffff08;color:#fff}.user{display:none;color:#cfc6ff;font-size:12px;border:1px solid #9871ff33;padding:8px 10px;border-radius:10px}
-@media(max-width:760px){.release{grid-template-columns:58px 1fr auto}.icon{width:58px;height:58px}.meta{grid-column:2}.dl{grid-column:3;grid-row:1/span 2}.hero h1{letter-spacing:-2px}.brand{font-size:19px}}
-</style></head><body>
-<div id="load" class="loading"><div><div class="loader">G</div><div>Loading Gamma Releases...</div></div></div>
-<div class="app"><div id="particles" class="particles"></div><main class="wrap">
-<header class="top"><div class="brand"><div class="logo">G</div><span>Gamma <b>Releases</b></span></div><div style="display:flex;gap:8px;align-items:center"><span id="user" class="user"></span><button id="menu" class="menu">☰</button></div></header>
-<section class="hero"><div class="eyebrow">GAMMA LAUNCHER</div><h1>Download the latest <span class="grad">Gamma</span></h1><p>Get the newest APK releases for Gamma Launcher and related apps.</p><div class="search"><span class="si">⌕</span><input id="search" placeholder="Search releases..." type="search"></div></section>
-<nav id="tabs" class="tabs"><button class="tab active" data-cat="all">All Releases</button><button class="tab" data-cat="Launcher">Launcher</button><button class="tab" data-cat="Tools">Tools</button><button class="tab" data-cat="Beta">Beta</button></nav>
-<section id="admin" class="admin"><div><b>Publisher access</b><div class="desc">Authorized Telegram account — publish a new APK.</div></div><button id="publish" class="primary">＋ Publish release</button></section>
-<section id="releases" class="releases"></section>
-<footer><span>© <span id="year"></span> Gamma Releases</span><span><a href="#" id="tg">Telegram</a> · <a href="#" id="dc">Discord</a> · <a target="_blank" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-">GitHub</a></span></footer>
-</main></div>
-<div id="account" class="modal"><div class="box"><div class="head"><h2>Account</h2><button class="close">×</button></div><p class="desc">Sign in to your account. Publishing is restricted on the server.</p><div class="login"><button id="discord" class="primary">Continue with Discord</button><button id="telegram" class="secondary">Continue with Telegram</button></div></div></div>
-<div id="pubmodal" class="modal"><div class="box"><div class="head"><h2>Publish APK</h2><button class="close">×</button></div><form id="form" class="form"><label>App name<input name="title" required placeholder="Gamma Launcher"></label><label>Version<input name="version" required placeholder="1.0.0"></label><label>Category<select name="category"><option>Launcher</option><option>Tools</option><option>Beta</option><option>Addons</option></select></label><label>Description<textarea name="description" maxlength="500"></textarea></label><label>APK<input name="apk" type="file" accept=".apk" required></label><button class="primary">Publish release</button><div id="status" class="desc"></div></form></div></div>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:#fff}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(125,70,255,.28),transparent 32%),
+    radial-gradient(circle at 80% 75%,rgba(0,170,255,.22),transparent 34%),
+    linear-gradient(135deg,#09051a,#120a2d 48%,#06182d);
+}
+#particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.particle{
+  position:absolute;width:5px;height:5px;border-radius:50%;
+  background:rgba(170,150,255,.35);filter:blur(1px);
+  animation:float linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(110vh) translateX(0);opacity:0}
+  15%{opacity:.6}85%{opacity:.35}
+  100%{transform:translateY(-15vh) translateX(60px);opacity:0}
+}
+.container{position:relative;z-index:1;width:min(1050px,92%);margin:auto}
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 0;
+}
+.logo{font-size:28px;font-weight:800;letter-spacing:-1px}
+.logo span{color:#fff}
+.logo .g{
+  background:linear-gradient(90deg,#a855f7,#6366f1,#22d3ee);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.btn{
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.09);
+  color:#fff;padding:11px 17px;border-radius:13px;
+  cursor:pointer;font-weight:700;backdrop-filter:blur(12px);
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.15)}
+.hero{text-align:center;padding:65px 0 35px}
+.hero h1{font-size:clamp(40px,8vw,76px);margin:0 0 14px}
+.hero h1 span{
+  background:linear-gradient(90deg,#b45cff,#6875ff,#2edcff);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.hero p{color:#bfc3d8;font-size:17px;margin:0 auto;max-width:600px}
+.platforms{display:flex;justify-content:center;gap:10px;margin:30px 0}
+.platform{
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.06);
+  padding:10px 18px;border-radius:12px;cursor:pointer;color:#ddd;
+}
+.platform.active{background:rgba(120,90,255,.28);border-color:rgba(150,120,255,.5);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:70px}
+.card{
+  background:rgba(14,12,35,.72);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:22px;padding:25px;
+  box-shadow:0 15px 50px rgba(0,0,0,.25);
+}
+.card h2{margin:0 0 10px;font-size:25px}
+.windows{background:linear-gradient(90deg,#6ea8ff,#9b7bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.android{background:linear-gradient(90deg,#52e6a4,#38c9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.version{color:#aeb3ca;font-size:14px;margin-bottom:17px}
+.desc{color:#cdd0df;line-height:1.55;min-height:48px}
+.download{
+  display:block;text-align:center;text-decoration:none;margin-top:20px;
+  padding:13px;border-radius:13px;color:#fff;font-weight:800;
+  background:linear-gradient(90deg,#7548ff,#368cff);
+  transition:.2s;
+}
+.download:hover{transform:translateY(-2px);filter:brightness(1.12)}
+footer{text-align:center;color:#777d99;padding:15px 0 35px;font-size:13px}
+@media(max-width:700px){
+  header{padding:18px 0}
+  .logo{font-size:23px}
+  .hero{padding:48px 0 25px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+
+<div class="container">
+<header>
+  <div class="logo"><span class="g">Gamma</span> <span>Releases</span></div>
+</header>
+
+<section class="hero">
+  <h1>Gamma <span>Releases</span></h1>
+  <p>Официальная страница релизов Gamma Launcher.</p>
+</section>
+
+<div class="platforms">
+  <button class="platform active" onclick="showAll()">Все</button>
+  <button class="platform" onclick="filterCards('Android')">Android</button>
+  <button class="platform" onclick="filterCards('Windows')">Windows</button>
+</div>
+
+<section class="grid" id="releases">
+  <article class="card" data-platform="Windows">
+    <h2 class="windows">Gamma launcher for Windows</h2>
+    <div class="version">Последняя версия</div>
+    <div class="desc">Версия Gamma Launcher для Windows.</div>
+    <!-- Положи EXE прямо в корень GitHub с таким названием -->
+    <a class="download"
+       href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe"
+       download>
+      Скачать для Windows
+    </a>
+  </article>
+
+  <article class="card" data-platform="Android">
+    <h2 class="android">Gamma launcher for Android</h2>
+    <div class="version">Последняя версия</div>
+    <div class="desc">Версия Gamma Launcher для Android.</div>
+    <!-- Положи APK прямо в корень GitHub с таким названием -->
+    <a class="download"
+       href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk"
+       download>
+      Скачать для Android
+    </a>
+  </article>
+</section>
+
+<footer>Gamma Releases © 2026</footer>
+</div>
+
 <script>
-(()=>{const $=s=>document.querySelector(s),parts=$('#particles');for(let i=0;i<65;i++){let p=document.createElement('i');p.className='p';let z=1+Math.random()*3;p.style.width=p.style.height=z+'px';p.style.left=Math.random()*100+'%';p.style.top=Math.random()*110+'%';p.style.animationDuration=7+Math.random()*12+'s';p.style.animationDelay=-Math.random()*15+'s';parts.appendChild(p)}setTimeout(()=>$('#load').classList.add('hide'),750);$('#year').textContent=new Date().getFullYear();let data=[],cat='all';const esc=x=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));function render(){let q=$('#search').value.toLowerCase();let a=data.filter(r=>(cat==='all'||String(r.category).toLowerCase()===cat.toLowerCase())&&[r.title,r.version,r.category,r.description].join(' ').toLowerCase().includes(q));$('#releases').innerHTML=a.length?a.map(r=>`<article class="release"><div class="icon">${r.category==='Tools'?'⚒':r.category==='Beta'?'⚗':r.category==='Addons'?'✦':'G'}</div><div><h3>${esc(r.title)}</h3><div class="desc">${esc(r.description||'No description')}</div><div class="tags"><span class="tag">${esc(r.category||'Release')}</span><span class="tag">APK</span></div></div><div class="meta"><div class="ver">v${esc(r.version)}</div><small>${r.created_at?new Date(r.created_at).toLocaleDateString():''}</small></div><button class="dl" data-id="${r.id}">↓</button></article>`).join(''):'<div class="empty">No releases found.</div>';document.querySelectorAll('.dl').forEach(b=>b.onclick=()=>location.href='/download/'+b.dataset.id)}async function load(){try{let r=await fetch('/api/releases');if(r.ok){data=await r.json();render()}}catch(e){render()}}async function me(){try{let r=await fetch('/api/me'),d=await r.json();if(d.user){$('#user').style.display='inline-block';$('#user').textContent='@'+(d.user.username||'user')}if(d.publisher)$('#admin').classList.add('show')}catch(e){}}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;render()});$('#search').oninput=render;$('#menu').onclick=()=>$('#account').classList.add('show');$('#publish').onclick=()=>$('#pubmodal').classList.add('show');document.querySelectorAll('.close').forEach(b=>b.onclick=()=>b.closest('.modal').classList.remove('show'));$('#discord').onclick=()=>location.href='/auth/discord';$('#telegram').onclick=()=>alert('Telegram Login Widget подключим после указания username Telegram-бота.');$('#form').onsubmit=async e=>{e.preventDefault();$('#status').textContent='Uploading...';try{let r=await fetch('/api/releases',{method:'POST',body:new FormData(e.target)}),d=await r.json();if(!r.ok)throw Error(d.error||'Upload failed');$('#status').textContent='Published successfully.';e.target.reset();await load();setTimeout(()=>$('#pubmodal').classList.remove('show'),600)}catch(x){$('#status').textContent=x.message}};load();me()})();
-</script></body></html>
+const particles=document.getElementById("particles");
+for(let i=0;i<34;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=(10+Math.random()*16)+"s";
+  p.style.animationDelay=(-Math.random()*20)+"s";
+  p.style.transform=`scale(${.5+Math.random()*1.4})`;
+  particles.appendChild(p);
+}
+
+function filterCards(platform){
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display=card.dataset.platform===platform?"block":"none";
+  });
+  document.querySelectorAll(".platform").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+}
+function showAll(){
+  document.querySelectorAll(".card").forEach(card=>card.style.display="block");
+  document.querySelectorAll(".platform").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+}
+</script>
+</body>
+</html>
