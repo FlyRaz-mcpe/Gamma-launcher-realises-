@@ -2,180 +2,50 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Gamma Releases</title>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;color:#f7efff}
-body{
-  min-height:100vh;overflow-x:hidden;
-  background:
-    radial-gradient(circle at 50% 15%,rgba(105,25,190,.22),transparent 30%),
-    radial-gradient(circle at 80% 80%,rgba(126,40,220,.18),transparent 32%),
-    linear-gradient(145deg,#08030f 0%,#140622 48%,#08020e 100%);
-}
-#particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-.particle{
-  position:absolute;width:4px;height:4px;border-radius:50%;
-  background:rgba(213,177,255,.7);box-shadow:0 0 9px rgba(157,66,255,.8);
-  animation:float linear infinite;
-}
-@keyframes float{
-  0%{transform:translateY(110vh) translateX(0) rotate(0);opacity:0}
-  15%{opacity:.75}80%{opacity:.5}
-  100%{transform:translateY(-15vh) translateX(55px) rotate(180deg);opacity:0}
-}
-.container{position:relative;z-index:1;width:min(1050px,92%);margin:auto}
-header{
-  display:flex;align-items:center;justify-content:space-between;padding:24px 0;
-}
-.logo{
-  font-size:28px;font-weight:800;letter-spacing:.5px;
-  text-shadow:0 0 18px rgba(159,67,255,.45)
-}
-.logo .g{
-  background:linear-gradient(90deg,#c778ff,#8c45ff,#6d8cff);
-  -webkit-background-clip:text;background-clip:text;color:transparent
-}
-.logo span:last-child{color:#eee3f8}
-.btn{
-  border:1px solid rgba(174,83,255,.48);
-  background:linear-gradient(145deg,rgba(76,24,118,.72),rgba(29,10,54,.72));
-  color:#fff;padding:11px 17px;border-radius:13px;cursor:pointer;font-weight:700;
-  box-shadow:0 0 18px rgba(121,35,220,.2),inset 0 0 18px rgba(173,70,255,.08);
-  transition:.2s;
-}
-.btn:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(145,55,255,.4)}
-.hero{text-align:center;padding:65px 0 35px}
-.hero h1{
-  font-size:clamp(40px,8vw,76px);margin:0 0 14px;
-  text-shadow:0 0 30px rgba(139,52,255,.35)
-}
-.hero h1 span{
-  background:linear-gradient(90deg,#d18aff,#8c50ff,#a96cff);
-  -webkit-background-clip:text;background-clip:text;color:transparent
-}
-.hero p{color:#c9b9d7;font-size:17px;margin:0 auto;max-width:600px}
-.platforms{display:flex;justify-content:center;gap:10px;margin:30px 0}
-.platform{
-  border:1px solid rgba(165,74,255,.5);
-  background:linear-gradient(145deg,rgba(54,19,82,.8),rgba(23,8,42,.8));
-  padding:10px 18px;border-radius:12px;cursor:pointer;color:#d8c8e5;
-  box-shadow:inset 0 0 14px rgba(147,55,255,.08);font-family:inherit
-}
-.platform.active{
-  background:linear-gradient(90deg,rgba(108,39,177,.8),rgba(70,32,132,.8));
-  border-color:#b05cff;color:#fff;box-shadow:0 0 20px rgba(151,61,255,.28)
-}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:70px}
-.card{
-  position:relative;overflow:hidden;
-  background:linear-gradient(145deg,rgba(34,12,58,.88),rgba(15,5,28,.9));
-  border:1px solid rgba(157,67,255,.6);
-  border-radius:22px;padding:25px;
-  box-shadow:0 0 22px rgba(104,34,184,.16),inset 0 0 25px rgba(132,46,216,.06);
-}
-.card:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(110deg,transparent 35%,rgba(174,90,255,.08),transparent 65%);
-}
-.card h2{margin:0 0 10px;font-size:25px;position:relative}
-.windows{
-  background:linear-gradient(90deg,#9b72ff,#6fa7ff,#c28cff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:none
-}
-.android{
-  background:linear-gradient(90deg,#d27aff,#9a67ff,#72b9ff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:none
-}
-.version{color:#bda9cb;font-size:14px;margin-bottom:17px;position:relative}
-.desc{color:#d7cde0;line-height:1.55;min-height:48px;position:relative}
-.download{
-  display:block;text-align:center;text-decoration:none;margin-top:20px;
-  padding:13px;border-radius:13px;color:#fff;font-weight:800;
-  background:linear-gradient(90deg,#7626b9,#713de0,#5745c9);
-  border:1px solid rgba(204,129,255,.5);
-  box-shadow:0 0 18px rgba(126,40,221,.25),inset 0 0 14px rgba(255,255,255,.05);
-  transition:.2s;position:relative
-}
-.download:hover{transform:translateY(-2px);filter:brightness(1.16);box-shadow:0 0 28px rgba(150,53,255,.4)}
-footer{text-align:center;color:#806e8f;padding:15px 0 35px;font-size:13px}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.logo{font-size:23px}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;color:#f7efff}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 50% 15%,rgba(105,25,190,.22),transparent 30%),radial-gradient(circle at 80% 80%,rgba(126,40,220,.18),transparent 32%),linear-gradient(145deg,#08030f,#140622 48%,#08020e)}
+#particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(213,177,255,.7);box-shadow:0 0 9px rgba(157,66,255,.8);animation:float linear infinite}
+@keyframes float{0%{transform:translateY(110vh) translateX(0);opacity:0}15%{opacity:.75}80%{opacity:.5}100%{transform:translateY(-15vh) translateX(55px);opacity:0}}
+.container{position:relative;z-index:1;width:min(1050px,92%);margin:auto}header{display:flex;align-items:center;justify-content:space-between;padding:24px 0}
+.logo{font-size:28px;font-weight:800;letter-spacing:.5px;text-shadow:0 0 18px rgba(159,67,255,.45)}.logo .g{background:linear-gradient(90deg,#c778ff,#8c45ff,#6d8cff);-webkit-background-clip:text;background-clip:text;color:transparent}.logo span:last-child{color:#eee3f8}
+.hero{text-align:center;padding:65px 0 35px}.hero h1{font-size:clamp(40px,8vw,76px);margin:0 0 14px;text-shadow:0 0 30px rgba(139,52,255,.35)}.hero h1 span{background:linear-gradient(90deg,#d18aff,#8c50ff,#a96cff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:#c9b9d7;font-size:17px;margin:0 auto;max-width:600px}
+.platforms{display:flex;justify-content:center;gap:10px;margin:30px 0;flex-wrap:wrap}.platform{border:1px solid rgba(165,74,255,.5);background:linear-gradient(145deg,rgba(54,19,82,.8),rgba(23,8,42,.8));padding:10px 18px;border-radius:12px;cursor:pointer;color:#d8c8e5;box-shadow:inset 0 0 14px rgba(147,55,255,.08);font-family:inherit}.platform.active{background:linear-gradient(90deg,rgba(108,39,177,.8),rgba(70,32,132,.8));border-color:#b05cff;color:#fff;box-shadow:0 0 20px rgba(151,61,255,.28)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:70px}.card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(34,12,58,.88),rgba(15,5,28,.9));border:1px solid rgba(157,67,255,.6);border-radius:22px;padding:25px;box-shadow:0 0 22px rgba(104,34,184,.16),inset 0 0 25px rgba(132,46,216,.06)}.card h2{margin:0 0 10px;font-size:25px}.windows{background:linear-gradient(90deg,#9b72ff,#6fa7ff,#c28cff);-webkit-background-clip:text;background-clip:text;color:transparent}.android{background:linear-gradient(90deg,#d27aff,#9a67ff,#72b9ff);-webkit-background-clip:text;background-clip:text;color:transparent}.minecraft{background:linear-gradient(90deg,#7cff9b,#54d979,#a2ffbe);-webkit-background-clip:text;background-clip:text;color:transparent}.version{color:#bda9cb;font-size:14px;margin-bottom:17px}.desc{color:#d7cde0;line-height:1.55;min-height:48px}.download{display:block;text-align:center;text-decoration:none;margin-top:20px;padding:13px;border-radius:13px;color:#fff;font-weight:800;background:linear-gradient(90deg,#7626b9,#713de0,#5745c9);border:1px solid rgba(204,129,255,.5);box-shadow:0 0 18px rgba(126,40,221,.25),inset 0 0 14px rgba(255,255,255,.05);transition:.2s}.download:hover{transform:translateY(-2px);filter:brightness(1.16)}
+footer{text-align:center;color:#806e8f;padding:15px 0 35px;font-size:13px}@media(max-width:700px){.grid{grid-template-columns:1fr}.logo{font-size:23px}}
 </style>
 </head>
 <body>
 <div id="particles"></div>
-
 <div class="container">
-<header>
-  <div class="logo"><span class="g">Gamma</span> <span>Releases</span></div>
-</header>
-
-<section class="hero">
-  <h1>Gamma <span>Releases</span></h1>
-  <p>Официальная страница релизов Gamma Launcher.</p>
-</section>
+<header><div class="logo"><span class="g">Gamma</span> <span>Releases</span></div></header>
+<section class="hero"><h1>Gamma <span>Releases</span></h1><p>Официальная страница релизов Gamma Launcher.</p></section>
 
 <div class="platforms">
-  <button class="platform active" onclick="showAll()">Все</button>
-  <button class="platform" onclick="filterCards('Android')">Android</button>
-  <button class="platform" onclick="filterCards('Windows')">Windows</button>
+<button class="platform active" onclick="filterCards('All',this)">Все</button>
+<button class="platform" onclick="filterCards('Android',this)">Android</button>
+<button class="platform" onclick="filterCards('Windows',this)">Windows</button>
+<button class="platform" onclick="filterCards('Minecraft',this)">Майнкрафт на Android</button>
 </div>
 
-<section class="grid" id="releases">
-  <article class="card" data-platform="Windows">
-    <h2 class="windows">Gamma launcher for Windows</h2>
-    <div class="version">Последняя версия</div>
-    <div class="desc">Версия Gamma Launcher для Windows.</div>
-    <!-- Положи EXE прямо в корень GitHub с таким названием -->
-    <a class="download"
-       href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe"
-       download>
-      Скачать для Windows
-    </a>
-  </article>
+<section class="grid">
+<article class="card" data-platform="Windows"><h2 class="windows">Gamma launcher for Windows</h2><div class="version">Последняя версия</div><div class="desc">Версия Gamma Launcher для Windows.</div><a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Windows.exe" download>Скачать для Windows</a></article>
 
-  <article class="card" data-platform="Android">
-    <h2 class="android">Gamma launcher for Android</h2>
-    <div class="version">Последняя версия</div>
-    <div class="desc">Версия Gamma Launcher для Android.</div>
-    <!-- Положи APK прямо в корень GitHub с таким названием -->
-    <a class="download"
-       href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk"
-       download>
-      Скачать для Android
-    </a>
-  </article>
+<article class="card" data-platform="Android"><h2 class="android">Gamma launcher for Android</h2><div class="version">Последняя версия</div><div class="desc">Версия Gamma Launcher для Android.</div><a class="download" href="https://github.com/FlyRaz-mcpe/Gamma-launcher-realises-/raw/refs/heads/main/Gamma-launcher-for-Android.apk" download>Скачать для Android</a></article>
+
+<article class="card" data-platform="Minecraft"><h2 class="minecraft">Minecraft PE 1.26.52</h2><div class="version">Android</div><div class="desc">Minecraft PE 1.26.52 для телефона на Android.</div><a class="download" href="https://mcpehub.org/engine/getfile.php?id=56257" download>Скачать Minecraft PE</a></article>
 </section>
 
 <footer>Gamma Releases © 2026</footer>
 </div>
-
 <script>
 const particles=document.getElementById("particles");
-for(let i=0;i<34;i++){
-  const p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.animationDuration=(10+Math.random()*16)+"s";
-  p.style.animationDelay=(-Math.random()*20)+"s";
-  p.style.transform=`scale(${.5+Math.random()*1.4})`;
-  particles.appendChild(p);
-}
-
-function filterCards(platform){
-  document.querySelectorAll(".card").forEach(card=>{
-    card.style.display=card.dataset.platform===platform?"block":"none";
-  });
-  document.querySelectorAll(".platform").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
-}
-function showAll(){
-  document.querySelectorAll(".card").forEach(card=>card.style.display="block");
-  document.querySelectorAll(".platform").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
+for(let i=0;i<34;i++){const p=document.createElement("div");p.className="particle";p.style.left=Math.random()*100+"%";p.style.animationDuration=(10+Math.random()*16)+"s";p.style.animationDelay=(-Math.random()*20)+"s";particles.appendChild(p)}
+function filterCards(platform,button){
+ document.querySelectorAll(".card").forEach(c=>c.style.display=platform==="All"||c.dataset.platform===platform?"block":"none");
+ document.querySelectorAll(".platform").forEach(b=>b.classList.remove("active"));button.classList.add("active");
 }
 </script>
 </body>
