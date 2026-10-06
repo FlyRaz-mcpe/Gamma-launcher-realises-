@@ -14,7 +14,12 @@
   --muted:#c8afd9;
 }
 
-html,body{margin:0;min-height:100%}
+html,body{
+  margin:0;
+  min-height:100%;
+  background-color:#07030c;
+  overscroll-behavior-y:none;
+}
 
 body{
   color:var(--text);
@@ -25,6 +30,7 @@ body{
     linear-gradient(135deg,#07030c,#19082b 55%,#08030d);
   background-attachment:fixed;
   overflow-x:hidden;
+  overscroll-behavior-y:none;
 }
 
 /* ---------- Ambient layer (GPU-friendly: no blur filters, transform/opacity only) ---------- */
