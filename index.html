@@ -832,5 +832,105 @@ footer{
 })();
 </script>
 
+
+<!-- ===== Audio: click sound + background music ===== -->
+<button id="musicToggle" type="button" aria-label="Музыка вкл/выкл" title="Музыка">♪</button>
+
+<style id="gamma-audio-style">
+#musicToggle{
+  position:fixed;right:16px;bottom:16px;z-index:50;
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(200,140,255,.45);
+  background:rgba(40,12,70,.75);color:#f7efff;
+  font-size:20px;line-height:1;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .15s ease,opacity .2s ease;
+}
+#musicToggle:active{transform:scale(.92)}
+#musicToggle.off{opacity:.55}
+#musicToggle.off::after{
+  content:"";position:absolute;left:10px;right:10px;top:50%;
+  height:2px;background:#f7efff;transform:rotate(-45deg);
+}
+</style>
+
+<script id="gamma-audio-script">
+(function(){
+  /* ---- Настройки ---- */
+  var CLICK_SRC  = "click.ogg";
+  var TRACKS     = ["music1.mp3","music2.mp3"];
+  var MUSIC_VOL  = 0.35;
+  var CLICK_VOL  = 0.6;
+
+  /* ---- Звук клика (несколько копий, чтобы быстрые клики не обрывались) ---- */
+  var clickPool = [], clickIdx = 0;
+  for (var i = 0; i < 4; i++){
+    var a = new Audio(CLICK_SRC);
+    a.preload = "auto";
+    a.volume = CLICK_VOL;
+    clickPool.push(a);
+  }
+  function playClick(){
+    var a = clickPool[clickIdx++ % clickPool.length];
+    try{ a.currentTime = 0; a.play().catch(function(){}); }catch(e){}
+  }
+  document.addEventListener("pointerdown", function(e){
+    if (e.target.closest("button, a, .card, .tab")) playClick();
+  }, true);
+
+  /* ---- Фоновая музыка: music1 -> music2 -> music1 -> ... ---- */
+  var music = new Audio();
+  music.preload = "auto";
+  music.volume = MUSIC_VOL;
+  var current = 0;
+  var started = false;
+  var enabled = true;
+  try{ enabled = localStorage.getItem("gammaMusic") !== "off"; }catch(e){}
+
+  var toggle = document.getElementById("musicToggle");
+  function syncBtn(){ toggle.classList.toggle("off", !enabled); }
+  syncBtn();
+
+  function loadTrack(n){
+    current = n % TRACKS.length;
+    music.src = TRACKS[current];
+  }
+  function startMusic(){
+    if (!enabled) return;
+    if (!music.src) loadTrack(0);
+    music.play().then(function(){ started = true; }).catch(function(){});
+  }
+
+  music.addEventListener("ended", function(){
+    loadTrack(current + 1);
+    if (enabled) music.play().catch(function(){});
+  });
+
+  /* Браузеры блокируют автозапуск звука — стартуем с первого касания/клика */
+  function firstGesture(){
+    startMusic();
+    if (started || !enabled) {
+      document.removeEventListener("pointerdown", firstGesture, true);
+      document.removeEventListener("keydown", firstGesture, true);
+    }
+  }
+  document.addEventListener("pointerdown", firstGesture, true);
+  document.addEventListener("keydown", firstGesture, true);
+
+  toggle.addEventListener("click", function(){
+    enabled = !enabled;
+    try{ localStorage.setItem("gammaMusic", enabled ? "on" : "off"); }catch(e){}
+    syncBtn();
+    if (enabled) startMusic(); else music.pause();
+  });
+
+  /* Пауза, когда вкладка скрыта */
+  document.addEventListener("visibilitychange", function(){
+    if (document.hidden) music.pause();
+    else if (enabled && started) music.play().catch(function(){});
+  });
+})();
+</script>
+
 </body>
 </html>
