@@ -894,8 +894,8 @@ button,.btn,.nav-link,.tab-button{ }
       </select>
       <label for="errorDetails">Подробности (необязательно)</label>
       <textarea id="errorDetails" name="errorDetails" rows="3" maxlength="1200" placeholder="Напиши, что произошло и на каком устройстве..."></textarea>
-      <button class="report-submit" type="submit">Подготовить сообщение</button>
-      <p class="report-note">Откроется приложение для отправки письма, если оно настроено. Сайт сам ничего не отправляет.</p>
+      <button class="report-submit" type="submit">Отправить</button>
+      <p class="report-note">Сообщение уйдёт разработчику на почту вместе со ссылкой на страницу и данными браузера.</p>
       <p class="report-status" id="reportStatus" role="status" aria-live="polite"></p>
     </form>
   </details>
@@ -1235,17 +1235,53 @@ button,.btn,.nav-link,.tab-button{ }
     });
   }
   var form=document.getElementById('errorReportForm');
-  if(form){form.addEventListener('submit',function(e){
-    e.preventDefault();
-    var type=document.getElementById('errorType');
-    var details=document.getElementById('errorDetails');
-    var status=document.getElementById('reportStatus');
-    var subject='Ошибка на Gamma Releases: '+(type?type.value:'Другая проблема');
-    var body='Здравствуйте! Хочу сообщить об ошибке на Gamma Releases.\n\nПроблема: '+(type?type.value:'Не указано')+'\nПодробности: '+(details&&details.value.trim()?details.value.trim():'Не указаны')+'\nСтраница: '+location.href+'\nУстройство/браузер: '+navigator.userAgent;
-    if(status)status.textContent='Подготовлено письмо. Если почтовое приложение не открылось, скопируй описание ниже и отправь его разработчику.';
-    var mailto='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-    window.location.href=mailto;
-  });}
+  if(form){
+    var REPORT_EMAIL='flyrazmc@gmail.com';
+    var sending=false,lastSent=0;
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var type=document.getElementById('errorType');
+      var details=document.getElementById('errorDetails');
+      var status=document.getElementById('reportStatus');
+      var btn=form.querySelector('.report-submit');
+      var typeVal=type?type.value:'Другая проблема';
+      var detailsVal=details&&details.value.trim()?details.value.trim():'Не указаны';
+      var subject='Ошибка на Gamma Releases: '+typeVal;
+      var say=function(t){if(status)status.textContent=t;};
+      if(sending)return;
+      if(Date.now()-lastSent<30000){say('Подожди немного перед следующей отправкой.');return;}
+      var fallback=function(){
+        var body='Проблема: '+typeVal+'\nПодробности: '+detailsVal+'\nСтраница: '+location.href+'\nУстройство/браузер: '+navigator.userAgent;
+        say('Не удалось отправить напрямую — открываю почтовое приложение.');
+        window.location.href='mailto:'+REPORT_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      };
+      sending=true;
+      if(btn)btn.disabled=true;
+      say('Отправляю…');
+      fetch('https://formsubmit.co/ajax/'+REPORT_EMAIL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+          _subject:subject,
+          _template:'table',
+          _honey:'',
+          'Проблема':typeVal,
+          'Подробности':detailsVal,
+          'Страница':location.href,
+          'Устройство/браузер':navigator.userAgent
+        })
+      }).then(function(r){return r.json().catch(function(){return {};});}).then(function(d){
+        if(d&&(d.success===true||d.success==='true')){
+          lastSent=Date.now();
+          say('Спасибо! Сообщение отправлено.');
+          if(details)details.value='';
+        }else{fallback();}
+      }).catch(fallback).then(function(){
+        sending=false;
+        if(btn)btn.disabled=false;
+      });
+    });
+  }
   // Stop CSS-driven ambient motion while the page is backgrounded and on low-motion devices.
   var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduceMotion){document.documentElement.classList.add('gamma-reduced-motion');}
