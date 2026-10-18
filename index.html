@@ -710,6 +710,38 @@ a,button,summary,.category-switcher,.category-pill,.tabs{touch-action:manipulati
 .preview-logo-wrap{display:flex;align-items:center;justify-content:center;overflow:hidden;background:transparent!important;box-shadow:none!important;border-color:transparent!important;}
 .preview-logo-img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit;filter:drop-shadow(0 0 20px rgba(197,80,255,.34));}
 </style>
+
+<style id="gamma-customizer-css">
+:root{--user-accent:#8b35ff;--user-accent2:#4c1d95;--user-bg:#080610;--user-glass:0.72;--user-glow:0 0 24px color-mix(in srgb,var(--user-accent) 45%,transparent)}
+body{background-color:var(--user-bg)}
+button,.btn,.nav-link,.tab-button{ } 
+#gammaCustomizeOpen{position:fixed;right:18px;bottom:20px;z-index:9998;border:1px solid color-mix(in srgb,var(--user-accent) 75%,white);border-radius:18px;padding:13px 17px;background:linear-gradient(135deg,var(--user-accent),var(--user-accent2));color:white;font-weight:800;box-shadow:var(--user-glow);cursor:pointer;backdrop-filter:blur(14px)}
+#gammaCustomize{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:#030207c9;backdrop-filter:blur(10px);padding:14px;font-family:inherit;color:#fff}
+#gammaCustomize.open{display:flex}#gammaCustomize .gc-panel{width:min(760px,100%);max-height:90vh;overflow:auto;border:1px solid color-mix(in srgb,var(--user-accent) 70%,white);border-radius:24px;padding:22px;background:linear-gradient(135deg,color-mix(in srgb,var(--user-accent2) 45%,#100c1d),#0c0915ed);box-shadow:0 0 45px color-mix(in srgb,var(--user-accent) 25%,transparent)}
+.gc-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.gc-head h2{margin:0;color:var(--user-accent);font-size:clamp(22px,4vw,30px)}.gc-close{border:1px solid #ffffff44;background:#ffffff12;color:white;border-radius:12px;padding:8px 12px;font-size:20px}
+.gc-label{display:block;margin:20px 0 10px;font-weight:800;letter-spacing:1px;color:#e7d9ff}.gc-themes{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px}.gc-theme{border:1px solid #ffffff36;border-radius:15px;padding:11px;background:#ffffff0b;color:white;cursor:pointer;text-align:left;font-weight:700}.gc-theme i{display:block;height:26px;border-radius:9px;margin-bottom:8px;background:linear-gradient(100deg,var(--a),var(--b))}.gc-theme.active{outline:2px solid var(--user-accent);box-shadow:var(--user-glow)}.gc-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}.gc-controls label{display:flex;flex-direction:column;gap:8px;color:#f3edff;font-size:14px}.gc-controls input[type=color]{width:100%;height:42px;border:1px solid #ffffff33;border-radius:10px;background:#ffffff10;padding:4px}.gc-controls input[type=range]{width:100%;accent-color:var(--user-accent)}.gc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.gc-actions button{border:1px solid #ffffff44;border-radius:12px;padding:11px 15px;color:white;background:#ffffff12;font-weight:700}.gc-actions .save{background:linear-gradient(120deg,var(--user-accent),var(--user-accent2));border:0}.gc-note{opacity:.7;font-size:12px;margin-top:12px}@media(max-width:480px){#gammaCustomize .gc-panel{padding:16px;border-radius:18px}.gc-themes{grid-template-columns:repeat(2,minmax(0,1fr))}#gammaCustomizeOpen{right:12px;bottom:12px}}
+</style>
+
+
+<style id="release-label-visibility-fix">
+/* Keep release names and platform labels visible in every theme */
+#grid .card h2, .grid .card h2, article.card h2 {
+  display:block !important; visibility:visible !important; opacity:1 !important;
+  color:var(--text, #f7f0ff) !important;
+  -webkit-text-fill-color:var(--text, #f7f0ff) !important;
+  background:none !important; background-image:none !important;
+  margin:18px 0 10px !important; line-height:1.25 !important;
+  font-size:clamp(19px, 4vw, 24px) !important;
+}
+#grid .card .version, .grid .card .version, article.card .version {
+  display:block !important; visibility:visible !important; opacity:1 !important;
+  color:var(--muted, #d8c9e8) !important;
+  -webkit-text-fill-color:var(--muted, #d8c9e8) !important;
+  background:none !important; margin:0 0 22px !important;
+  font-size:16px !important; line-height:1.5 !important;
+}
+#grid .card .type { display:inline-block !important; visibility:visible !important; opacity:1 !important; }
+</style>
 </head>
 
 <body>
@@ -1229,5 +1261,259 @@ a,button,summary,.category-switcher,.category-pill,.tabs{touch-action:manipulati
 
 <script id="gamma-account-info-script">(function(){var b=document.getElementById('accountInfoButton'),i=document.getElementById('accountInfo');if(b&&i){b.addEventListener('click',function(){i.hidden=!i.hidden;b.setAttribute('aria-expanded',String(!i.hidden));if(!i.hidden)i.scrollIntoView({behavior:'smooth',block:'nearest'});});}})();</script>
 <script id="gamma-i18n">(()=>{const dict={ru:{account:'Аккаунт',heroTitle:'Твой мир.<br><span>Твои правила.</span>',heroDesc:'Gamma Launcher и Minecraft для Android — в одном месте. Чистый интерфейс, быстрый доступ к релизам и только нужное.',open:'Открыть релизы',inside:'Что внутри',gammaKicker:'GAMMA LAUNCHER',gammaTitle:'Твой лаунчер. <em>Твой стиль.</em>',gammaDesc:'Выбери версию Gamma Launcher для своей платформы.',library:'БИБЛИОТЕКА',pick:'Выбери свой <em>релиз</em>',pickDesc:'Открой нужную вкладку и скачай релиз.',minecraft:'Minecraft на Android',news:'Новости',all:'Все',download:'Скачать Gamma',apk:'Скачать APK',features:'ВОЗМОЖНОСТИ',faq:'ВОПРОСЫ',cta:'Врывайся в <em>Gamma.</em>'},en:{account:'Account',heroTitle:'Your world.<br><span>Your rules.</span>',heroDesc:'Gamma Launcher and Minecraft for Android in one place. A clean interface, quick access to releases, and only what you need.',open:'Browse releases',inside:'Explore features',gammaKicker:'GAMMA LAUNCHER',gammaTitle:'Your launcher. <em>Your style.</em>',gammaDesc:'Choose a Gamma Launcher build for your platform.',library:'LIBRARY',pick:'Choose your <em>release</em>',pickDesc:'Choose a category and download a release.',minecraft:'Minecraft for Android',news:'News',all:'All',download:'Download Gamma',apk:'Download APK',features:'FEATURES',faq:'QUESTIONS',cta:'Jump into <em>Gamma.</em>'}};function apply(lang){const d=dict[lang];document.documentElement.lang=lang;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('is-active',b.dataset.lang===lang));const set=(q,v)=>{const e=document.querySelector(q);if(e&&v)e.innerHTML=v};set('.account-link span',d.account);set('.hero-title',d.heroTitle);set('.hero-description',d.heroDesc);const a=document.querySelectorAll('.hero-actions a');if(a[0])a[0].innerHTML=d.open+' <span>↗</span>';if(a[1])a[1].textContent=d.inside;set('.launcher-downloads .section-kicker',d.gammaKicker);set('.launcher-downloads .section-title',d.gammaTitle);set('.launcher-downloads .category-description',d.gammaDesc);set('.downloads-heading .section-kicker',d.library);set('.downloads-heading .section-title',d.pick);set('.downloads-heading>p',d.pickDesc);set('.feature-section .section-kicker',d.features);set('.faq-section .section-kicker',d.faq);set('.cta-content h2',d.cta);document.querySelectorAll('.tabs .tab').forEach(b=>{const k=b.dataset.filter;if(k==='Minecraft')b.textContent=d.minecraft;else if(k==='News')b.textContent=d.news;else if(k==='Android')b.textContent='Android';else if(k==='Windows')b.textContent='Windows';else if(k==='All')b.textContent=d.all});document.querySelectorAll('.gamma-download span:first-child').forEach(e=>e.textContent=d.download);document.querySelectorAll('.card[data-category="Minecraft"] .download').forEach(e=>e.textContent=d.apk);document.querySelectorAll('.card[data-category="Minecraft"] h2').forEach(e=>e.textContent=d.minecraft)}document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));apply('ru')})();</script>
+
+<button id="gammaCustomizeOpen" type="button" aria-label="Настроить оформление">🎨 Оформление</button>
+<div id="gammaCustomize" role="dialog" aria-modal="true" aria-label="Настройка оформления">
+ <section class="gc-panel"><div class="gc-head"><h2>✦ Оформление Gamma</h2><button class="gc-close" id="gcClose" aria-label="Закрыть">×</button></div>
+ <span class="gc-label">ГОТОВЫЕ ТЕМЫ</span><div class="gc-themes" id="gcThemes"></div>
+ <span class="gc-label">СОЗДАЙ СВОЮ ТЕМУ</span><div class="gc-controls">
+ <label>Основной цвет акцента<input type="color" id="gcAccent" value="#8b35ff"></label>
+ <label>Второй цвет градиента<input type="color" id="gcAccent2" value="#4c1d95"></label>
+ <label>Цвет фона<input type="color" id="gcBg" value="#080610"></label>
+ <label>Прозрачность панелей <output id="gcGlassOut">72%</output><input type="range" id="gcGlass" min="20" max="100" value="72"></label>
+ <label>Сила свечения <output id="gcGlowOut">45%</output><input type="range" id="gcGlow" min="0" max="100" value="45"></label>
+ </div><div class="gc-actions"><button class="save" id="gcSave">Сохранить тему</button><button id="gcReset">Сбросить</button><button id="gcClose2">Закрыть</button></div><div class="gc-note">Тема сохраняется в этом браузере на устройстве.</div></section>
+</div>
+<script id="gamma-customizer-js">
+(()=>{const $=id=>document.getElementById(id),root=document.documentElement;const themes=[['Gamma','#8b35ff','#4c1d95','#080610'],['Океан','#18bde8','#1645a3','#061017'],['Закат','#ff6b35','#b82050','#160907'],['Лес','#20c77a','#086b54','#06110b'],['Сакура','#f05cb9','#7137c9','#140813'],['Неон','#a5ff35','#00a6a6','#080d08'],['Золото','#ffbd21','#a84b0b','#100c04'],['Кровь','#ef3340','#8e102d','#100508'],['Киберпанк','#27d9ff','#bd45ff','#080713'],['Монохром','#c8d0df','#5b6474','#090a0d']];let chosen='Gamma';function apply(a,b,bg,glass=72,glow=45){root.style.setProperty('--user-accent',a);root.style.setProperty('--user-accent2',b);root.style.setProperty('--user-bg',bg);root.style.setProperty('--user-glass',glass/100);root.style.setProperty('--user-text',a);root.style.setProperty('--user-border',a);document.body.style.setProperty('--user-accent',a);root.style.setProperty('--user-glow',`0 0 ${Math.round(glow*.55)}px ${a}75`);$('gcAccent').value=a;$('gcAccent2').value=b;$('gcBg').value=bg;$('gcGlass').value=glass;$('gcGlow').value=glow;$('gcGlassOut').textContent=glass+'%';$('gcGlowOut').textContent=glow+'%';document.querySelectorAll('.gc-theme').forEach(x=>x.classList.toggle('active',x.dataset.name===chosen))}function save(){localStorage.setItem('gammaSiteTheme',JSON.stringify({name:chosen,a:$('gcAccent').value,b:$('gcAccent2').value,bg:$('gcBg').value,glass:$('gcGlass').value,glow:$('gcGlow').value}))}themes.forEach(([name,a,b,bg])=>{let el=document.createElement('button');el.type='button';el.className='gc-theme';el.dataset.name=name;el.innerHTML=`<i style="--a:${a};--b:${b}"></i>${name}`;el.onclick=()=>{chosen=name;apply(a,b,bg);save()};$('gcThemes').append(el)});const modal=$('gammaCustomize');$('gammaCustomizeOpen').onclick=()=>modal.classList.add('open');$('gcClose').onclick=$('gcClose2').onclick=()=>modal.classList.remove('open');modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});function custom(){chosen='Своя';apply($('gcAccent').value,$('gcAccent2').value,$('gcBg').value,+$('gcGlass').value,+$('gcGlow').value)}['gcAccent','gcAccent2','gcBg','gcGlass','gcGlow'].forEach(id=>$(id).addEventListener('input',custom));$('gcSave').onclick=()=>{save();$('gcSave').textContent='✓ Сохранено';setTimeout(()=>$('gcSave').textContent='Сохранить тему',1400)};$('gcReset').onclick=()=>{localStorage.removeItem('gammaSiteTheme');chosen='Gamma';apply(...themes[0].slice(1),72,45);save()};try{let v=JSON.parse(localStorage.getItem('gammaSiteTheme'));if(v){chosen=v.name;apply(v.a,v.b,v.bg,+v.glass,+v.glow)}else apply(...themes[0].slice(1))}catch(e){apply(...themes[0].slice(1))}})();
+</script>
+
+
+<style id="gamma-theme-live-fix">
+:root{--g-violet:var(--user-accent,#8b35ff);--g-line:color-mix(in srgb,var(--user-accent,#8b35ff) 48%,transparent);--text:#f7efff;--muted:color-mix(in srgb,#f7efff 68%,var(--user-accent2,#4c1d95));--user-glass:.72}
+html,body{background-color:var(--user-bg,#080610)!important;color:var(--text)}
+body{background:radial-gradient(ellipse at 50% 15%,color-mix(in srgb,var(--user-accent) 30%,transparent),transparent 42%),radial-gradient(ellipse at 12% 85%,color-mix(in srgb,var(--user-accent2) 28%,transparent),transparent 38%),linear-gradient(135deg,var(--user-bg),color-mix(in srgb,var(--user-bg) 55%,var(--user-accent2)) 55%,var(--user-bg))!important;background-attachment:fixed!important}
+.orb1{background:radial-gradient(circle,color-mix(in srgb,var(--user-accent) 46%,transparent),transparent 68%)!important}.orb2{background:radial-gradient(circle,color-mix(in srgb,var(--user-accent2) 45%,transparent),transparent 68%)!important}.orb3{background:radial-gradient(circle,color-mix(in srgb,var(--user-accent) 35%,var(--user-accent2)),transparent 68%)!important}
+.particle{background:var(--user-accent)!important;box-shadow:0 0 9px color-mix(in srgb,var(--user-accent) 80%,transparent)!important}
+.site-header,.glass-panel,.card,.feature-card,.faq-item,.news-card,.download-card,.cta-content,.stat-card,.info-card{border-color:var(--g-line)!important;background-color:color-mix(in srgb,var(--user-bg) calc(100% - (var(--user-glass,.72) * 42%)),transparent)!important;backdrop-filter:blur(14px)}
+.site-header{background-color:color-mix(in srgb,var(--user-bg) 80%,transparent)!important}
+.brand-mark,.hero-title span,.section-title em,.section-kicker,.gc-head h2,.faq-number,.feature-icon,.card-badge,.hero-eyebrow{color:var(--user-accent)!important}
+.hero-title,.section-title,.cta-content h2,.faq-question,.card h2,.feature-card h3{color:var(--text)!important}
+button,.tab,.hero-actions a,.download,.account-link,.small-action,.report-submit{--theme-glow:var(--user-glow);transition:background .25s,border-color .25s,box-shadow .25s,color .25s}
+.hero-actions a:first-child,.tab.is-active,.tabs .tab.active,.download,.report-submit,.gc-actions .save,.cta-content .button,.primary-button{background:linear-gradient(120deg,var(--user-accent),var(--user-accent2))!important;box-shadow:var(--user-glow)!important;color:white!important;border-color:color-mix(in srgb,var(--user-accent) 65%,white)!important}
+button:focus-visible,a:focus-visible{outline-color:var(--user-accent)!important}
+.tab,.account-link,.small-action,.hero-actions a,.download-card,.faq-item,.feature-card,.news-card{border-color:var(--g-line)!important}
+.tab:hover,.account-link:hover,.small-action:hover,.faq-item:hover,.feature-card:hover,.news-card:hover,.download-card:hover{border-color:var(--user-accent)!important;box-shadow:var(--user-glow)!important}
+.gc-theme i{background:linear-gradient(110deg,var(--a),var(--b))!important}.gc-panel{background:color-mix(in srgb,var(--user-bg) 94%,#171020)!important;border-color:var(--user-accent)!important}.gc-theme.active{border-color:var(--user-accent)!important;box-shadow:var(--user-glow)!important}
+.glass-panel,.card,.feature-card,.faq-item,.news-card,.download-card,.cta-content{background-color:color-mix(in srgb,var(--user-bg) calc(100% - (var(--user-glass,.72) * 42%)),transparent)!important}
+input,select,textarea{accent-color:var(--user-accent)}
+::selection{background:var(--user-accent);color:white}
+</style>
+
+
+<style id="gamma-global-theme-overrides">
+/* Make every major section follow the selected theme, not just the page backdrop. */
+:root{--theme-a:var(--user-accent,#8b35ff);--theme-b:var(--user-accent2,#4c1d95);--theme-bg:var(--user-bg,#080610);--theme-line:color-mix(in srgb,var(--theme-a) 48%,transparent);--theme-glass:var(--user-glass,.72)}
+html,body{color:#f7f2ff!important}
+body{background:radial-gradient(ellipse at 75% 18%,color-mix(in srgb,var(--theme-a) 34%,transparent),transparent 42%),radial-gradient(ellipse at 18% 78%,color-mix(in srgb,var(--theme-b) 45%,transparent),transparent 45%),linear-gradient(145deg,var(--theme-bg),color-mix(in srgb,var(--theme-bg) 58%,var(--theme-b)),color-mix(in srgb,var(--theme-bg) 70%,var(--theme-a)))!important}
+/* Cards and section surfaces */
+.site-header,.site-footer,.glass-panel,.hero-visual,.preview-window,.preview-card,.launcher-card,.release-card,.card,.feature-card,.faq-item,.news-card,.download-card,.cta-content,.stat-card,.info-card,.release-panel,.downloads-panel,.feature-section,.faq-section,.news-section,.launcher-downloads,.downloads-section,.account-panel,.modal-content,.empty-state,.category-panel{
+ border-color:var(--theme-line)!important;
+ background:linear-gradient(135deg,color-mix(in srgb,var(--theme-bg) calc(100% - var(--theme-glass)*35%),transparent),color-mix(in srgb,var(--theme-b) calc(var(--theme-glass)*24%),transparent))!important;
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+}
+.site-header{background:color-mix(in srgb,var(--theme-bg) 88%,transparent)!important}
+/* Avoid opaque black rectangles behind heading/description text */
+.cta-content h1,.cta-content h2,.cta-content p,.cta-content .cta-label,.hero-content h1,.hero-content p,.hero-title,.hero-description,.section-title,.section-kicker,.faq-question,.faq-answer,.feature-card h3,.feature-card p,.card h2,.card p,.downloads-heading p,.cta-content *{background-color:transparent!important;background-image:none!important}
+/* Accent color applies to labels, emphasis, icons, links and active states */
+.brand-mark,.brand-name span,.hero-title span,.section-title em,.section-kicker,.hero-eyebrow,.cta-content em,.faq-number,.feature-icon,.gc-head h2,.highlight,.accent,.stat-number{color:var(--theme-a)!important}
+.hero-title,.section-title,.cta-content h2,.faq-question,.card h2,.feature-card h3,.brand-name,.nav-link{color:#f7f2ff!important}
+button,.btn,.tab,.tab-button,.nav-link,.account-link,.small-action,.hero-actions a,.download,.report-submit,.primary-button,.secondary-button,.cta-content a,.category-pill,.category-switcher{border-color:var(--theme-line)!important;transition:background .22s,border-color .22s,box-shadow .22s,color .22s}
+.hero-actions a:first-child,.tab.is-active,.tabs .tab.active,.download,.report-submit,.gc-actions .save,.cta-content .button,.primary-button,.account-link,.brand-mark{background:linear-gradient(120deg,var(--theme-a),var(--theme-b))!important;color:white!important;border-color:color-mix(in srgb,var(--theme-a) 68%,white)!important;box-shadow:var(--user-glow)!important}
+.tab,.secondary-button,.hero-actions a:not(:first-child),.small-action,.category-pill,.category-switcher{background:color-mix(in srgb,var(--theme-bg) 70%,transparent)!important;color:#f7f2ff!important}
+.tab:hover,.account-link:hover,.small-action:hover,.faq-item:hover,.feature-card:hover,.news-card:hover,.download-card:hover,.category-pill:hover{border-color:var(--theme-a)!important;box-shadow:var(--user-glow)!important}
+.particle,.twinkle,.gamma-intro-particles>*{background-color:var(--theme-a)!important;box-shadow:0 0 10px color-mix(in srgb,var(--theme-a) 80%,transparent)!important}
+#gammaIntro{background:radial-gradient(ellipse at 50% 40%,color-mix(in srgb,var(--theme-a) 25%,transparent),transparent 45%),linear-gradient(145deg,var(--theme-bg),color-mix(in srgb,var(--theme-bg) 65%,var(--theme-b)))!important}
+#gammaCustomizeOpen{background:linear-gradient(120deg,var(--theme-a),var(--theme-b))!important}
+input,select,textarea{accent-color:var(--theme-a)!important;border-color:var(--theme-line)!important}
+::selection{background:var(--theme-a);color:#fff}
+</style>
+
+
+<style id="gamma-global-theme-polished">
+/* Theme palette: recolor the site while preserving the original rounded glass design. */
+:root{--gt-a:var(--user-accent,#963cff);--gt-b:var(--user-accent2,#5d20bd);--gt-bg:var(--user-bg,#090511);--gt-line:color-mix(in srgb,var(--gt-a) 48%,transparent);--gt-text:#f7f1ff;--gt-muted:color-mix(in srgb,#f7f1ff 70%,var(--gt-a));--gt-glow:var(--user-glow,0 0 22px color-mix(in srgb,var(--gt-a) 32%,transparent))}
+html,body{background-color:var(--gt-bg)!important;color:var(--gt-text)}
+body{background-image:radial-gradient(ellipse at 18% 15%,color-mix(in srgb,var(--gt-a) 25%,transparent),transparent 43%),radial-gradient(ellipse at 82% 72%,color-mix(in srgb,var(--gt-b) 32%,transparent),transparent 46%),linear-gradient(135deg,var(--gt-bg),color-mix(in srgb,var(--gt-bg) 68%,var(--gt-b)))!important;background-attachment:fixed!important}
+/* Only actual cards/panels get a glass surface; do not turn every section into a rectangle. */
+.glass-panel,.hero-visual,.preview-window,.preview-card,.launcher-card,.release-card,.card,.feature-card,.faq-item,.news-card,.download-card,.cta-content,.stat-card,.info-card,.release-panel,.downloads-panel,.account-panel,.modal-content,.empty-state,.category-panel,.section-card,.panel,.tile,.release,.version-card,.tab-content,.tab-panel,.accordion-item,.hero-card,.hero-panel,.library-card,.custom-card,.announcement,.notice,.content-card,.content-panel,.preview,.mockup,.browser-window,.download-item,.release-item,.news-item,.faq-row,.hero-box,.cta-box{border-color:var(--gt-line)!important;background-color:color-mix(in srgb,var(--gt-bg) 78%,var(--gt-b) 22%)!important;background-image:linear-gradient(135deg,color-mix(in srgb,var(--gt-a) 11%,transparent),color-mix(in srgb,var(--gt-b) 15%,transparent))!important;box-shadow:0 12px 34px color-mix(in srgb,var(--gt-bg) 38%,transparent)}
+/* Keep the site's original corner radii and glass transparency. */
+section,article,aside,main,nav,.container,.content,.inner,.hero-copy,.hero-content{background-color:transparent}
+.hero-copy,.hero-content,.cta-content .cta-text,.cta-content p,.cta-content h2,.faq-question,.faq-answer,.faq-item h3,.faq-item p,.hero-copy *,.hero-content *{background-color:transparent!important;background-image:none!important}
+.brand-mark,.brand-name,.logo-text,.hero-eyebrow,.hero-title span,.section-title em,.section-kicker,.eyebrow,.section-label,.kicker,.faq-number,.feature-icon,.card-badge,.stat-value,.number,.accent,.highlight,.gradient-text{color:var(--gt-a)}
+.brand-name,.logo-text,.hero-title span,.section-title span,.section-title em,.cta-content h2 span,.gradient-text,.highlight{background:linear-gradient(100deg,var(--gt-a),var(--gt-b),var(--gt-a));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h1,h2,h3,h4,h5,h6,.hero-title,.section-title,.cta-content h2,.faq-question,.card h2,.feature-card h3{color:var(--gt-text)}
+p,li,label,small,.muted,.subtitle,.description,.faq-answer,.stat-label,.section-description{color:var(--gt-muted)}
+button,.btn,.nav-link,.tab-button,.tab,.lang-btn,.download-btn,.primary-btn,.secondary-btn,.action-btn,.cta-button,.account-link,.small-action,.category-pill,.category-switcher,.hero-actions a,.download,.report-submit{border-color:var(--gt-line)!important}
+.hero-actions a:first-child,.tab.is-active,.tabs .tab.active,.download,.report-submit,.cta-content .button,.primary-button,.primary-btn,.btn-primary,.cta-button,.hero .btn:first-child,.hero-actions .btn:first-child,.cta-content .btn:first-child,.account-link,.brand-mark{background:linear-gradient(120deg,var(--gt-a),var(--gt-b))!important;color:white!important;box-shadow:var(--gt-glow);border-color:color-mix(in srgb,var(--gt-a) 70%,white)!important}
+.tab,.secondary-button,.hero-actions a:not(:first-child),.small-action,.category-pill,.category-switcher{background:color-mix(in srgb,var(--gt-bg) 78%,transparent)!important;color:var(--gt-text)!important}
+button:hover,a.button:hover,.btn:hover,.nav-link:hover,.tab:hover,.download-btn:hover,.action-btn:hover,.small-action:hover,.faq-item:hover,.feature-card:hover,.news-card:hover,.download-card:hover,.category-pill:hover{border-color:var(--gt-a)!important;box-shadow:var(--gt-glow)}
+.particle,.star,.sparkle,.floating-particle,.twinkle,.gamma-intro-particles i{background-color:var(--gt-a)!important;box-shadow:0 0 10px color-mix(in srgb,var(--gt-a) 70%,transparent)!important}
+#gammaIntro{background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--gt-a) 27%,transparent),transparent 48%),linear-gradient(145deg,var(--gt-bg),color-mix(in srgb,var(--gt-bg) 58%,var(--gt-b)))!important}
+.gamma-intro-title{background:linear-gradient(105deg,var(--gt-a),color-mix(in srgb,var(--gt-a) 45%,var(--gt-b)),var(--gt-b),var(--gt-a));background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.gamma-intro-sub{color:var(--gt-muted)!important}.gamma-intro-line{background:linear-gradient(90deg,transparent,var(--gt-a),var(--gt-b),transparent)!important}
+input,select,textarea{background-color:color-mix(in srgb,var(--gt-bg) 80%,var(--gt-b))!important;color:var(--gt-text)!important;border-color:var(--gt-line)!important;accent-color:var(--gt-a)!important}input::placeholder,textarea::placeholder{color:var(--gt-muted)!important}
+hr,.divider,.line,.section-line{border-color:var(--gt-line)!important;background-color:var(--gt-line)!important}::selection{background:var(--gt-a);color:#fff}
+#gammaCustomize .gc-panel{background:linear-gradient(135deg,color-mix(in srgb,var(--gt-bg) 55%,var(--gt-a) 45%),color-mix(in srgb,var(--gt-bg) 72%,var(--gt-b) 28%))!important;border-color:var(--gt-line)!important}#gammaCustomizeOpen{background:linear-gradient(120deg,var(--gt-a),var(--gt-b))!important;border-color:var(--gt-line)!important;box-shadow:var(--gt-glow)!important}
+@media(max-width:600px){.card,.download-card,.feature-card,.faq-item,.cta-content,.preview-window,.hero-visual{border-radius:24px!important}.download-card{overflow:hidden}.card h2,.download-card h2{overflow-wrap:anywhere}}
+</style>
+
+
+<style id="gamma-theme-complete">
+/* ===== Финальный слой темы: все секции берут цвета из выбранной темы ===== */
+:root{
+  color-scheme:dark;
+  --gx-a:var(--user-accent,#8b35ff);
+  --gx-b:var(--user-accent2,#4c1d95);
+  --gx-bg:var(--user-bg,#080610);
+  --gx-text:#f7f2ff;
+  --gx-on:#ffffff;
+  --gx-muted:color-mix(in srgb,var(--gx-text) 70%,var(--gx-bg));
+  --gx-dim:color-mix(in srgb,var(--gx-text) 50%,var(--gx-bg));
+  --gx-line:color-mix(in srgb,var(--gx-a) 40%,transparent);
+  --gx-line-soft:color-mix(in srgb,var(--gx-a) 20%,transparent);
+  --gx-light:color-mix(in srgb,var(--gx-a) 50%,var(--gx-text));
+  --gx-glow:var(--user-glow,0 0 22px color-mix(in srgb,var(--gx-a) 40%,transparent));
+  /* переопределяем старые переменные, чтобы их подхватили прежние блоки */
+  --text:var(--gx-text);--muted:var(--gx-muted);
+  --gt-text:var(--gx-text);--gt-muted:var(--gx-muted);
+  --g-violet:var(--gx-a);--g-line:var(--gx-line-soft);--g-muted:var(--gx-muted);
+}
+html,body{color:var(--gx-text)!important}
+::selection{background:var(--gx-a);color:var(--gx-on)}
+
+/* Шапка и бренд */
+.site-header{background:color-mix(in srgb,var(--gx-bg) 84%,transparent)!important;border-bottom-color:var(--gx-line-soft)!important}
+.brand-mark{color:var(--gx-on)!important}
+.brand-name{background:none!important;-webkit-text-fill-color:var(--gx-text)!important;color:var(--gx-text)!important}
+.brand-name b,.brand-name span{color:var(--gx-a)!important;-webkit-text-fill-color:var(--gx-a)!important}
+.language-switch{border-color:var(--gx-line-soft)!important;background:color-mix(in srgb,var(--gx-a) 8%,transparent)!important}
+.lang-btn{color:var(--gx-muted)!important}
+.lang-btn.is-active{background:linear-gradient(135deg,var(--gx-a),var(--gx-b))!important;color:var(--gx-on)!important;box-shadow:var(--gx-glow)}
+
+/* Заголовки и градиентные акценты */
+.hero-title,.section-title,.cta-content h2,.feature-card h3,.faq-question{color:var(--gx-text)!important}
+.hero-title span,.section-title em,.cta-content h2 em{
+  background:linear-gradient(100deg,color-mix(in srgb,var(--gx-a) 55%,#fff),var(--gx-a) 40%,color-mix(in srgb,var(--gx-b) 35%,var(--gx-a)) 68%,color-mix(in srgb,var(--gx-a) 55%,#fff))!important;
+  background-size:220% auto!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;color:transparent!important
+}
+.eyebrow,.section-kicker{color:var(--gx-a)!important}
+.eyebrow>span,.section-kicker>span{background:var(--gx-a)!important;box-shadow:0 0 16px color-mix(in srgb,var(--gx-a) 70%,transparent)!important}
+.hero-description,.downloads-heading>p,.category-description,.cta-content p,.account-info,.feature-card p,.faq-item p{color:var(--gx-muted)!important}
+.hero-stats strong{color:var(--gx-text)!important}
+.hero-stats strong i{color:var(--gx-a)!important}
+.hero-stats span{color:var(--gx-dim)!important}
+
+/* Кнопки */
+body .hero-actions a:first-child,body .hero-primary,body .tabs .tab.active,body .tab.is-active,body .download,body .gamma-download,body .report-submit,body .account-link,body .gc-actions .save{
+  background:linear-gradient(120deg,var(--gx-a),var(--gx-b))!important;
+  color:var(--gx-on)!important;
+  border-color:color-mix(in srgb,var(--gx-a) 65%,#fff)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.22),var(--gx-glow)!important
+}
+body .hero-secondary,body .small-action,body .tabs .tab:not(.active){
+  background:color-mix(in srgb,var(--gx-bg) 72%,transparent)!important;
+  color:var(--gx-text)!important;border-color:var(--gx-line)!important
+}
+.gamma-download-icon{border-color:rgba(255,255,255,.35)!important;background:rgba(255,255,255,.15)!important}
+
+/* Вкладки */
+.tabs{border-color:var(--gx-line)!important;background:linear-gradient(135deg,color-mix(in srgb,var(--gx-a) 12%,var(--gx-bg)),color-mix(in srgb,var(--gx-b) 14%,var(--gx-bg)))!important;box-shadow:inset 0 1px rgba(255,255,255,.04)!important}
+
+/* Карточки релизов */
+.card:hover{border-color:var(--gx-a)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 36px color-mix(in srgb,var(--gx-a) 34%,transparent)!important}
+.type{color:var(--gx-light)!important;border-color:var(--gx-line)!important;background:color-mix(in srgb,var(--gx-a) 18%,transparent)!important}
+.version-format{color:var(--gx-dim)!important}
+.new-badge{
+  color:var(--gx-text)!important;border-color:color-mix(in srgb,var(--gx-a) 60%,#fff)!important;
+  background:linear-gradient(110deg,color-mix(in srgb,var(--gx-a) 34%,transparent),color-mix(in srgb,var(--gx-a) 14%,transparent),color-mix(in srgb,var(--gx-b) 40%,transparent))!important;
+  background-size:200% 100%!important;
+  animation:gxNewGlow 3.5s ease-in-out infinite!important
+}
+@keyframes gxNewGlow{
+  0%,100%{background-position:0% 50%;box-shadow:0 0 10px color-mix(in srgb,var(--gx-a) 22%,transparent)}
+  50%{background-position:100% 50%;box-shadow:0 0 20px color-mix(in srgb,var(--gx-a) 45%,transparent)}
+}
+.empty{color:var(--gx-muted)!important}
+
+/* Hero-превью */
+.hero-preview{border-color:var(--gx-line)!important;background:linear-gradient(145deg,color-mix(in srgb,var(--gx-a) 16%,var(--gx-bg)),color-mix(in srgb,var(--gx-bg) 92%,#000) 60%,color-mix(in srgb,var(--gx-b) 22%,var(--gx-bg)))!important}
+.hero-preview:before{background:radial-gradient(ellipse at 60% 35%,color-mix(in srgb,var(--gx-a) 28%,transparent),transparent 48%)!important}
+.preview-dot{background:var(--gx-a)!important}
+.preview-label{color:var(--gx-dim)!important}
+.preview-name{color:var(--gx-text)!important}
+.preview-sub{color:var(--gx-muted)!important}
+.preview-lines span{background:linear-gradient(90deg,var(--gx-a),color-mix(in srgb,var(--gx-a) 13%,transparent))!important}
+.preview-chip{border-color:var(--gx-line)!important;color:var(--gx-light)!important;background:color-mix(in srgb,var(--gx-a) 12%,transparent)!important}
+.chip-pulse{background:var(--gx-a)!important;box-shadow:0 0 12px var(--gx-a)!important}
+.preview-orbit{border-color:color-mix(in srgb,var(--gx-a) 18%,transparent)!important}
+.preview-logo-img{filter:drop-shadow(0 0 20px color-mix(in srgb,var(--gx-a) 45%,transparent))!important}
+
+/* Возможности и FAQ */
+.feature-symbol{color:var(--gx-light)!important;background:linear-gradient(145deg,color-mix(in srgb,var(--gx-a) 26%,transparent),color-mix(in srgb,var(--gx-b) 16%,transparent))!important;border-color:var(--gx-line-soft)!important}
+.feature-number{color:color-mix(in srgb,var(--gx-a) 32%,transparent)!important}
+.faq-item summary{color:var(--gx-text)!important}
+.faq-number{color:var(--gx-a)!important}
+.faq-item summary b{color:var(--gx-a)!important;border-color:var(--gx-line-soft)!important}
+.faq-item[open] summary b{background:color-mix(in srgb,var(--gx-a) 16%,transparent)!important}
+
+/* Нижний баннер */
+.final-cta{border-color:var(--gx-line)!important;background:linear-gradient(115deg,color-mix(in srgb,var(--gx-a) 22%,var(--gx-bg)),color-mix(in srgb,var(--gx-bg) 90%,#000) 55%,color-mix(in srgb,var(--gx-b) 30%,var(--gx-bg)))!important}
+.final-cta .cta-content{background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.cta-glow{background:radial-gradient(ellipse,color-mix(in srgb,var(--gx-a) 32%,transparent),transparent 68%)!important}
+
+/* Доп. панели: история, новости, форма ошибки */
+.glass-panel>summary,.panel-heading h2,.history-item strong,.news-card h3,.report-form label{color:var(--gx-text)!important}
+.glass-panel>summary::after{color:var(--gx-a)!important}
+.summary-hint,.report-note,.report-status{color:var(--gx-dim)!important}
+.history-item p,.news-card p,.panel-heading p{color:var(--gx-muted)!important}
+.section-icon{color:var(--gx-light)!important;background:color-mix(in srgb,var(--gx-a) 17%,transparent)!important;border-color:var(--gx-line-soft)!important}
+.history-dot{background:var(--gx-a)!important;box-shadow:0 0 12px color-mix(in srgb,var(--gx-a) 60%,transparent)!important}
+.history-item{border-top-color:var(--gx-line-soft)!important}
+.news-date{color:var(--gx-light)!important}
+.news-card{border-color:var(--gx-line-soft)!important}
+.report-form select option{background:color-mix(in srgb,var(--gx-bg) 90%,var(--gx-b));color:var(--gx-text)}
+.report-form select:focus,.report-form textarea:focus{border-color:var(--gx-a)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--gx-a) 20%,transparent)!important}
+.report-status:not(:empty){color:var(--gx-light)!important}
+
+/* Подвал, интро, кнопки справа внизу, окно настроек */
+footer{color:var(--gx-dim)!important}
+.gamma-intro-glow{background:radial-gradient(circle,color-mix(in srgb,var(--gx-a) 30%,transparent),color-mix(in srgb,var(--gx-a) 8%,transparent) 42%,transparent 70%)!important}
+.gamma-intro-mark{border-color:var(--gx-line)!important;box-shadow:0 0 28px color-mix(in srgb,var(--gx-a) 30%,transparent)!important}
+#musicToggle{bottom:78px!important;right:18px!important;border-color:var(--gx-line)!important;background:color-mix(in srgb,var(--gx-bg) 75%,var(--gx-b))!important;color:var(--gx-text)!important}
+#musicToggle.off::after{background:var(--gx-text)!important}
+#gammaCustomizeOpen{color:var(--gx-on)!important}
+#gammaCustomize .gc-panel{background:linear-gradient(135deg,color-mix(in srgb,#0c0914 80%,var(--gx-a)),color-mix(in srgb,#0c0914 78%,var(--gx-b)))!important;border-color:var(--gx-line)!important}
+.gc-label,.gc-controls label,.gc-theme{color:#f3edff!important}
+@media(max-width:480px){#musicToggle{right:12px!important;bottom:70px!important}}
+@media(prefers-reduced-motion:reduce){.new-badge{animation:none!important}}
+</style>
+
+<script id="gamma-theme-complete-js">
+/* Подгоняет цвет текста и надписей на кнопках под яркость выбранных цветов (для светлых тем), и цвет панели браузера */
+(()=>{
+  const root=document.documentElement;
+  const lum=h=>{const m=/^#?([0-9a-f]{6})$/i.exec((h||'').trim());if(!m)return null;const n=parseInt(m[1],16);const f=c=>{c/=255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)};return .2126*f(n>>16)+.7152*f((n>>8)&255)+.0722*f(n&255)};
+  const put=(k,v)=>{if(root.style.getPropertyValue(k)!==v)root.style.setProperty(k,v)};
+  let meta=document.querySelector('meta[name="theme-color"]');
+  if(!meta){meta=document.createElement('meta');meta.name='theme-color';document.head.appendChild(meta)}
+  function sync(){
+    const cs=root.style,bg=cs.getPropertyValue('--user-bg').trim(),a=cs.getPropertyValue('--user-accent').trim(),b=cs.getPropertyValue('--user-accent2').trim();
+    const lb=lum(bg),la=lum(a),l2=lum(b);
+    if(lb!==null){
+      const light=lb>.45;
+      put('--gx-text',light?'#1a1226':'#f7f2ff');
+      if(root.style.colorScheme!==(light?'light':'dark'))root.style.colorScheme=light?'light':'dark';
+      if(meta.content!==bg)meta.content=bg;
+    }
+    if(la!==null&&l2!==null){put('--gx-on',(la+l2)/2>.42?'#12091c':'#ffffff')}
+  }
+  new MutationObserver(sync).observe(root,{attributes:true,attributeFilter:['style']});
+  sync();
+})();
+</script>
+
 </body>
 </html>
